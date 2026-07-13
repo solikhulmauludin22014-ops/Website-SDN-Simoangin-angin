@@ -1,4 +1,4 @@
-import { MapPin, Phone, Mail, BookOpen, Clock } from "lucide-react";
+import { MapPin, Phone, Mail, BookOpen, Clock, Instagram, Youtube } from "lucide-react";
 import Link from "next/link";
 
 export function Footer() {
@@ -8,7 +8,7 @@ export function Footer() {
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
 
           {/* Brand */}
-          <div className="space-y-3">
+          <div className="space-y-4">
             <div className="flex items-center gap-3">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -24,7 +24,27 @@ export function Footer() {
             <p className="text-sm text-blue-100 leading-relaxed">
               Terwujudnya peserta didik yang beriman, bertakwa, berakhlak mulia, berprestasi, dan berwawasan lingkungan.
             </p>
-            <p className="text-xs font-semibold tracking-widest text-yellow-300 uppercase">
+            <div className="flex items-center gap-3 pt-1">
+              <a
+                href="https://www.instagram.com/sdnsimoangin?igsh=dnN1bWEzZ2RqaGxx"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition-all hover:bg-gradient-to-tr hover:from-yellow-400 hover:via-pink-500 hover:to-purple-500 hover:shadow-lg"
+                aria-label="Instagram"
+              >
+                <Instagram className="h-5 w-5 text-white transition-transform group-hover:scale-110" />
+              </a>
+              <a
+                href="https://www.youtube.com/@sdnsimoangin4753"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition-all hover:bg-[#FF0000] hover:shadow-lg"
+                aria-label="YouTube"
+              >
+                <Youtube className="h-5 w-5 text-white transition-transform group-hover:scale-110" />
+              </a>
+            </div>
+            <p className="text-xs font-semibold tracking-widest text-yellow-300 uppercase pt-1">
               TUT WURI HANDAYANI
             </p>
           </div>
