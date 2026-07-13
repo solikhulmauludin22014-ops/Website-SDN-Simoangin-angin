@@ -1,26 +1,257 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-bg: #FDFBF6;
+  --color-ink: #3F4B5C;
+  --color-primary: #1d4e89;
+  --color-secondary: #cb9f52;
+  --color-surface: #F5EFE0;
+  --color-panel: #efe7d5;
+  --color-border: #E5DFD0;
+  --color-heading: #16324F;
+  --color-text-secondary: #3F4B5C;
+  --color-text-muted: #5B6B7D;
+  --color-accent-bg: #FBF3E0;
+  --color-accent-text: #8A6A16;
+}
+
+.dark {
+  --color-bg: #0F1B2D;
+  --color-ink: #C7CED8;
+  --color-primary: #3b82f6;
+  --color-secondary: #fcd34d;
+  --color-surface: #1B2A3D;
+  --color-panel: #334155;
+  --color-border: #2A3B50;
+  --color-heading: #F4EFE6;
+  --color-text-secondary: #C7CED8;
+  --color-text-muted: #93A0B1;
+  --color-accent-bg: #2A3B50;
+  --color-accent-text: #E0B84B;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-background: var(--color-bg);
+  --color-foreground: var(--color-ink);
+  --color-heading: var(--color-heading);
+  --color-text-secondary: var(--color-text-secondary);
+  --color-text-muted: var(--color-text-muted);
+  --color-accent-bg: var(--color-accent-bg);
+  --color-accent-text: var(--color-accent-text);
+  --font-sans: var(--font-jakarta-sans);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(203, 159, 82, 0.18), transparent 35%),
+    radial-gradient(circle at 90% 0%, rgba(29, 78, 137, 0.2), transparent 40%),
+    var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-jakarta-sans), sans-serif;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+.font-display {
+  font-family: var(--font-fraunces), serif;
+}
+
+/* ── Global click / hover animations ─────────────────────────────── */
+
+button,
+a,
+[role="button"] {
+  transition-property: transform, box-shadow, opacity, background-color, border-color;
+  transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition-duration: 150ms;
+}
+
+button:active,
+a:active,
+[role="button"]:active {
+  transform: scale(0.96) !important;
+}
+
+/* Ripple container */
+.ripple-container {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Icon hover bounce */
+svg {
+  transition: transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+button:hover svg,
+a:hover svg {
+  transform: scale(1.15);
+}
+
+/* Card hover lift */
+.card-hover {
+  transition: transform 280ms cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 280ms ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-5px) scale(1.015);
+  box-shadow: 0 16px 40px rgba(29, 78, 137, 0.18);
+}
+
+/* Ripple animation */
+@keyframes ripple {
+  0%   { transform: scale(0); opacity: 0.45; }
+  100% { transform: scale(4); opacity: 0; }
+}
+
+.ripple-wave {
+  position: absolute;
+  border-radius: 9999px;
+  background: rgba(29, 78, 137, 0.25);
+  width: 60px;
+  height: 60px;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  animation: ripple 0.6s linear forwards;
+}
+
+/* ── Fade & Slide animations ─────────────────────────────── */
+
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-up {
+  animation: fadeSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateX(-18px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.animate-fade-in-left {
+  animation: fadeSlideIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ── Floating / Levitate animation ─────────────────────────── */
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+
+.animate-float {
+  animation: float 3.5s ease-in-out infinite;
+}
+
+/* ── Shimmer for skeleton loaders ─────────────────────────── */
+
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+.shimmer {
+  background: linear-gradient(90deg, #ece2cd 25%, #f5f1e6 50%, #ece2cd 75%);
+  background-size: 800px 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+/* ── CTA Pulse button glow ─────────────────────────────────── */
+
+@keyframes ctaPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(29, 78, 137, 0.4); }
+  50%       { box-shadow: 0 0 0 10px rgba(29, 78, 137, 0); }
+}
+
+.btn-pulse {
+  animation: ctaPulse 2.4s ease-in-out infinite;
+}
+
+@keyframes goldPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(203, 159, 82, 0.45); }
+  50%       { box-shadow: 0 0 0 10px rgba(203, 159, 82, 0); }
+}
+
+.btn-pulse-gold {
+  animation: goldPulse 2.4s ease-in-out infinite;
+}
+
+/* ── Glow border for highlighted cards ─────────────────────── */
+
+@keyframes glowBorder {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(29, 78, 137, 0.0), 0 4px 20px rgba(29,78,137,0.08); }
+  50%       { box-shadow: 0 0 0 3px rgba(29, 78, 137, 0.2), 0 8px 32px rgba(29,78,137,0.15); }
+}
+
+.glow-card {
+  animation: glowBorder 3s ease-in-out infinite;
+}
+
+/* ── Gradient animated background ─────────────────────────── */
+
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradientShift 6s ease infinite;
+}
+
+/* ── Stagger helper delays ─────────────────────────────────── */
+
+.delay-75  { animation-delay: 75ms; }
+.delay-150 { animation-delay: 150ms; }
+.delay-225 { animation-delay: 225ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-450 { animation-delay: 450ms; }
+.delay-600 { animation-delay: 600ms; }
+
+/* ── Navbar dropdown animation ─────────────────────────────── */
+
+@keyframes dropdown-in {
+  from { opacity: 0; transform: translateY(-8px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.animate-dropdown {
+  animation: dropdown-in 0.22s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ── Mobile menu slide ─────────────────────────────────────── */
+
+@keyframes slide-down {
+  from { opacity: 0; transform: translateY(-14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-slide-down {
+  animation: slide-down 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ── Scale-in for badges / chips ───────────────────────────── */
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.85); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* ── Status dot blink ─────────────────────────────────────── */
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.35; }
+}
+
+.animate-blink {
+  animation: blink 1.8s ease-in-out infinite;
 }

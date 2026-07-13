@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+}
+
+model Category {
+  id    String @id @default(cuid())
+  name  String @unique
+  slug  String @unique
+  books Book[]
+}
+
+model Book {
+  id            String   @id @default(cuid())
+  slug          String   @unique
+  title         String
+  author        String
+  publisher     String?
+  description   String?
+  publishedYear Int?
+  pageCount     Int?
+  coverUrl      String?
+  driveFileId   String
+  driveViewLink String
+  categoryId    String
+  category      Category @relation(fields: [categoryId], references: [id])
+  viewCount     Int      @default(0)
+  downloadCount Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([title])
+  @@index([author])
+  @@index([publishedYear])
+  @@index([createdAt])
+}

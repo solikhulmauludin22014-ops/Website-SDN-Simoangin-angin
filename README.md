@@ -1,36 +1,97 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Website Sekolah + Perpustakaan Digital
 
-## Getting Started
+Project ini dibuat dengan Next.js App Router + TypeScript untuk kebutuhan website sekolah yang terintegrasi dengan perpustakaan digital.
 
-First, run the development server:
+## Fitur Utama
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Halaman publik sekolah: beranda, profil, fasilitas, kontak
+- Katalog perpustakaan digital dengan pencarian realtime, filter, dan sorting
+- Halaman detail buku dengan embed Google Drive viewer + tombol download
+- Login admin (NextAuth credentials)
+- Dashboard admin + statistik sederhana
+- CRUD buku dan kategori
+- Upload e-book/cover ke Google Drive API v3 (service account)
+- Prisma ORM + PostgreSQL (Neon)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Next.js 16 (sesuai requirement 14+)
+- TypeScript
+- Tailwind CSS
+- Prisma
+- NextAuth.js
+- Framer Motion
+- Recharts
+- Zod
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Struktur Route
 
-## Learn More
+- `/`
+- `/perpustakaan`
+- `/perpustakaan/[slug]`
+- `/profil`
+- `/fasilitas`
+- `/kontak`
+- `/admin/login`
+- `/admin/dashboard`
+- `/admin/buku`
+- `/admin/buku/tambah`
+- `/admin/buku/[id]/edit`
+- `/admin/kategori`
 
-To learn more about Next.js, take a look at the following resources:
+## Setup Lokal
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Install dependency:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+	```bash
+	npm install
+	```
 
-## Deploy on Vercel
+2. Copy env:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+	```bash
+	copy .env.example .env
+	```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+3. Isi variable env utama:
+
+	- `DATABASE_URL`
+	- `NEXTAUTH_SECRET`
+	- `NEXTAUTH_URL`
+	- `GOOGLE_CLIENT_EMAIL`
+	- `GOOGLE_PRIVATE_KEY`
+	- `GOOGLE_DRIVE_FOLDER_ID`
+
+4. Generate Prisma client dan push schema:
+
+	```bash
+	npm run db:generate
+	npm run db:push
+	```
+
+5. Seed admin + sample data:
+
+	```bash
+	npm run db:seed
+	```
+
+6. Jalankan development server:
+
+	```bash
+	npm run dev
+	```
+
+## Akun Admin Default Seed
+
+- Email: `admin@sekolah.sch.id`
+- Password: `admin12345`
+
+Ubah via env `SEED_ADMIN_EMAIL` dan `SEED_ADMIN_PASSWORD` sebelum menjalankan seed jika diperlukan.
+
+## Catatan Deploy
+
+- Frontend/Serverless: Vercel
+- Database: Neon
+- Pastikan semua env variable ditambahkan di Vercel Project Settings.
+- Saat menghubungkan repo GitHub ke Vercel, set `Root Directory` ke `sekolah-digital`.
+- Build Vercel sekarang menjalankan `prisma generate && next build`, jadi Prisma Client ikut terbuat saat deploy.
