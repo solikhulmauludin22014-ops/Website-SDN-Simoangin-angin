@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "http://localhost:3000/sitemap.xml",
+    sitemap: `${process.env.NEXTAUTH_URL ?? "https://website-sdn-simoangin-angin.vercel.app"}/sitemap.xml`,
   };
 }

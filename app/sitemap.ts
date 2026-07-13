@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = "http://localhost:3000";
+  const base = process.env.NEXTAUTH_URL ?? "https://website-sdn-simoangin-angin.vercel.app";
 
   return [
     "",
