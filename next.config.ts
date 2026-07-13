@@ -1,11 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  eslint: {
-    // Skip ESLint during Vercel build – warnings won't break the deployment
-    ignoreDuringBuilds: true,
-  },
-
   typescript: {
     // Skip type-checking during build – speeds up CI and avoids type-error failures
     ignoreBuildErrors: true,
