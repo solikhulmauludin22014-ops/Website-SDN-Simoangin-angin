@@ -19,31 +19,31 @@ const profilMenu = [
   {
     icon: Eye,
     label: "Visi",
-    color: "text-blue-600",
-    bg: "bg-blue-50",
+    color: "text-blue-600 dark:text-blue-400",
+    bg: "bg-blue-50 dark:bg-blue-500/10",
     content:
       "Terwujudnya peserta didik yang beriman, bertakwa, berakhlak mulia, berprestasi, berbudaya, dan berwawasan lingkungan.",
   },
   {
     icon: Target,
     label: "Misi",
-    color: "text-emerald-600",
-    bg: "bg-emerald-50",
+    color: "text-emerald-600 dark:text-emerald-400",
+    bg: "bg-emerald-50 dark:bg-emerald-500/10",
     content:
       "1. Menumbuhkan penghayatan dan pengamalan ajaran agama.\n2. Melaksanakan pembelajaran aktif, kreatif, efektif, dan menyenangkan.\n3. Meningkatkan prestasi akademik dan non-akademik.\n4. Membiasakan budaya bersih, disiplin, dan peduli lingkungan.\n5. Menjalin kemitraan yang harmonis antara sekolah, orang tua, dan masyarakat.",
   },
   {
     icon: Award,
     label: "Motto",
-    color: "text-amber-600",
-    bg: "bg-amber-50",
+    color: "text-amber-600 dark:text-amber-400",
+    bg: "bg-amber-50 dark:bg-amber-500/10",
     content: "\"TUT WURI HANDAYANI\" — Dari belakang seorang guru harus bisa memberikan dorongan dan arahan.",
   },
   {
     icon: GraduationCap,
     label: "Identitas",
-    color: "text-purple-600",
-    bg: "bg-purple-50",
+    color: "text-purple-600 dark:text-purple-400",
+    bg: "bg-purple-50 dark:bg-purple-500/10",
     content:
       "SDN Simoangin-angin\nWonoayu, Sidoarjo, Jawa Timur\nNPSN: ...\nAkreditasi: A",
   },

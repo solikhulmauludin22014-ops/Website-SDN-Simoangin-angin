@@ -127,8 +127,7 @@ export default function ProfilPage() {
             </div>
             <div className="flex flex-1 flex-col justify-center p-8 md:p-10">
               <p className="text-xl italic leading-relaxed text-text-secondary">
-                &ldquo;Terwujudnya peserta didik yang beriman, bertakwa, berakhlak mulia, berprestasi,
-                dan berwawasan lingkungan.&rdquo;
+                &ldquo;Terwujudnya Peserta didik yang Beriman,Berprestasi dan Berkarakter serta berwawasan global.&rdquo;
               </p>
             </div>
           </div>
@@ -149,10 +148,10 @@ export default function ProfilPage() {
             <div className="p-8 md:p-10">
               <ul className="space-y-4 text-text-secondary">
                 {[
-                  "Menanamkan keimanan dan ketakwaan melalui pengamalan ajaran agama.",
-                  "Mengoptimalkan proses pembelajaran dan bimbingan secara efektif.",
-                  "Membina kemandirian peserta didik melalui kegiatan pembiasaan, kewirausahaan, dan pengembangan diri.",
-                  "Menjalin kerja sama yang harmonis antarwarga sekolah, masyarakat, dan lembaga lain yang terkait.",
+                  "Membangun lingkungan sekolah yang membentuk peserta didik memiliki akhlak mulia melalui rutinitas kegiatan keagamaan dan menerapkan ajaran agama melaui cara berinteraksi di sekolah.",
+                  "Mengembangkan dan memfasilitasi peningkatan prestasi peserta didik sesuai minat dan bakatnya melalui proses pendampingan dan kerja sama dengan orang tua.",
+                  "Membiasakan peserta didik melakukan praktik baik untuk penguatan  karakterdan peduli lingkungan.",
+                  "Melaksanakan pembelajaran dan penilaian berbasis teknologi informasi dan komunikasi (TIK), serta berwawasan global.",
                 ].map((misi, i) => (
                   <motion.li
                     key={i}
