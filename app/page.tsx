@@ -71,10 +71,19 @@ const news = [
   },
 ];
 
-const galleryImages = [
-  "/galeri kegiatan Pemberian reward kepada guru berprestasi 2026 atas nama Karel Hidayatulloh, S.Pd. Wali Kelas 4B.jpeg",
-  "/galeri kegiatan Pemberian reward kepada guru berprestasi 2026 atas nama Umi Khaulatul Mawali, S.Pd. Guru PAI.jpeg",
-  "/galeri kegiatan podcast juara 1 lomba pildacil sek kabupaten sidoarjo.jpg",
+const galleryItems = [
+  {
+    src: "/galeri kegiatan Pemberian reward kepada guru berprestasi 2026 atas nama Karel Hidayatulloh, S.Pd. Wali Kelas 4B.jpeg",
+    title: "Pemberian Reward Guru Berprestasi (Karel Hidayatulloh, S.Pd)",
+  },
+  {
+    src: "/galeri kegiatan Pemberian reward kepada guru berprestasi 2026 atas nama Umi Khaulatul Mawali, S.Pd. Guru PAI.jpeg",
+    title: "Pemberian Reward Guru Berprestasi (Umi Khaulatul Mawali, S.Pd)",
+  },
+  {
+    src: "/galeri kegiatan podcast juara 1 lomba pildacil sek kabupaten sidoarjo.jpg",
+    title: "Podcast Juara 1 Lomba Pildacil se-Kab. Sidoarjo",
+  },
 ];
 
 export default function Home() {
@@ -410,9 +419,9 @@ export default function Home() {
           </div>
         </div>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {galleryImages.map((src, i) => (
+          {galleryItems.map((item, i) => (
             <motion.div
-              key={src}
+              key={item.src}
               className="group relative h-56 overflow-hidden rounded-xl border border-[var(--color-border)] shadow-sm"
               initial={{ opacity: 0, scale: 0.96 }}
               whileInView={{ opacity: 1, scale: 1 }}
@@ -420,8 +429,13 @@ export default function Home() {
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: i * 0.12 }}
             >
-              <Image src={src} alt="Kegiatan sekolah SDN Simoangin-angin" fill className="object-cover transition-transform duration-700 group-hover:scale-110" sizes="33vw" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+              <Image src={item.src} alt={item.title} fill className="object-cover transition-transform duration-700 group-hover:scale-110" sizes="33vw" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-100" />
+              <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-2 transition-transform duration-300 group-hover:translate-y-0">
+                <p className="text-sm font-semibold text-white drop-shadow-md">
+                  {item.title}
+                </p>
+              </div>
             </motion.div>
           ))}
         </div>
