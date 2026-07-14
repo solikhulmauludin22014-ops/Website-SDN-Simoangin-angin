@@ -62,10 +62,10 @@ export default function ProfilPage() {
         <div className="relative z-10 px-6 py-16 text-center md:px-12 md:py-24">
           <motion.div
             {...fadeUp(0.1)}
-            className="mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full border border-white/20 bg-white/10 p-4 shadow-lg backdrop-blur-sm"
+            className="mx-auto mb-6 flex h-28 w-28 items-center justify-center overflow-hidden rounded-full bg-white p-2 shadow-2xl ring-4 ring-white/20"
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo-sdn.png.png" alt="Logo SDN Simoangin-angin" className="h-full w-full object-contain drop-shadow-md" />
+            <img src="/logo-sdn.png.png" alt="Logo SDN Simoangin-angin" className="h-full w-full object-contain" />
           </motion.div>
           <motion.span
             {...fadeUp(0.15)}

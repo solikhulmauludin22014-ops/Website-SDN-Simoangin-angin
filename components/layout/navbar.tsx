@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ChevronDown, BookOpen, Target, Eye, Menu, X, Award, MapPin, Phone, Mail, GraduationCap } from "lucide-react";
+import { ChevronDown, BookOpen, Target, Eye, Menu, X, Award, MapPin, Phone, Mail, GraduationCap, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 
@@ -184,13 +184,14 @@ export function Navbar() {
                       </div>
                     ))}
                   </div>
-                  <div className="mt-3 border-t border-[var(--color-border)] pt-3">
+                  <div className="mt-4 border-t border-[var(--color-border)] pt-4">
                     <Link
                       href="/profil"
                       onClick={() => setProfilOpen(false)}
-                      className="inline-flex items-center gap-1 text-xs font-semibold text-heading hover:underline"
+                      className="group flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-blue-700 hover:shadow-md"
                     >
-                      Lihat halaman profil lengkap →
+                      Lihat Profil Lengkap Sekolah
+                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                     </Link>
                   </div>
                 </div>
