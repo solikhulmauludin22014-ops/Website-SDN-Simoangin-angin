@@ -5,7 +5,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Quote, Star, BookOpen, Users, Award, GraduationCap, Trophy, ArrowRight, Newspaper, Calendar } from "lucide-react";
+import { Quote, Star, BookOpen, Users, Award, GraduationCap, Trophy, ArrowRight, Newspaper, Calendar, MessageSquare, Headphones } from "lucide-react";
 import { TeacherSlider } from "@/components/teachers/teacher-slider";
 
 const fadeUp = (delay = 0) => ({
@@ -380,6 +380,49 @@ export default function Home() {
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
             </motion.div>
           ))}
+        </div>
+      </RevealSection>
+
+      {/* ── Layanan & Pengaduan ─────────────────────────────────────── */}
+      <RevealSection className="grid gap-6 md:grid-cols-2">
+        <div className="group relative overflow-hidden rounded-3xl border border-[var(--color-border)] bg-gradient-to-br from-blue-50 to-indigo-50 p-8 shadow-sm transition-all duration-300 hover:shadow-lg dark:from-blue-900/20 dark:to-indigo-900/20 md:p-10">
+          <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-blue-100/50 transition-transform duration-500 group-hover:scale-150 dark:bg-blue-800/20" />
+          <div className="relative z-10 flex h-full flex-col items-start">
+            <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-md">
+              <MessageSquare className="h-7 w-7" />
+            </div>
+            <h3 className="font-display mb-2 text-2xl font-bold text-heading">Saran & Pengaduan</h3>
+            <p className="mb-8 flex-1 text-sm leading-relaxed text-text-secondary">
+              Punya masukan, saran, atau keluhan terkait layanan sekolah? Sampaikan kepada kami untuk mewujudkan sekolah yang lebih baik dan nyaman bagi semuanya.
+            </p>
+            <Link
+              href="/kontak"
+              className="inline-flex items-center gap-2 rounded-full bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-md transition-all duration-200 hover:scale-105 hover:bg-blue-700"
+            >
+              Kirim Saran / Pengaduan <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </div>
+
+        <div className="group relative overflow-hidden rounded-3xl border border-[var(--color-border)] bg-gradient-to-br from-emerald-50 to-teal-50 p-8 shadow-sm transition-all duration-300 hover:shadow-lg dark:from-emerald-900/20 dark:to-teal-900/20 md:p-10">
+          <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-emerald-100/50 transition-transform duration-500 group-hover:scale-150 dark:bg-emerald-800/20" />
+          <div className="relative z-10 flex h-full flex-col items-start">
+            <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-600 text-white shadow-md">
+              <Headphones className="h-7 w-7" />
+            </div>
+            <h3 className="font-display mb-2 text-2xl font-bold text-heading">Helpdesk & Informasi</h3>
+            <p className="mb-8 flex-1 text-sm leading-relaxed text-text-secondary">
+              Butuh bantuan informasi pendaftaran, perpustakaan digital, atau administrasi sekolah? Tim Helpdesk kami siap membantu Anda di jam kerja.
+            </p>
+            <Link
+              href="https://wa.me/6285655914559"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full bg-emerald-600 px-6 py-3 text-sm font-semibold text-white shadow-md transition-all duration-200 hover:scale-105 hover:bg-emerald-700"
+            >
+              Hubungi Helpdesk <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
         </div>
       </RevealSection>
 
