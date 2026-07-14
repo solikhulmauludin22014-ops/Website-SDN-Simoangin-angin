@@ -72,9 +72,9 @@ const news = [
 ];
 
 const galleryImages = [
-  "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=900&q=80",
-  "https://images.unsplash.com/photo-1453738773917-9c3eff1db985?auto=format&fit=crop&w=900&q=80",
-  "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=900&q=80",
+  "/galeri kegiatan Pemberian reward kepada guru berprestasi 2026 atas nama Karel Hidayatulloh, S.Pd. Wali Kelas 4B.jpeg",
+  "/galeri kegiatan Pemberian reward kepada guru berprestasi 2026 atas nama Umi Khaulatul Mawali, S.Pd. Guru PAI.jpeg",
+  "/galeri kegiatan podcast juara 1 lomba pildacil sek kabupaten sidoarjo.jpg",
 ];
 
 export default function Home() {
