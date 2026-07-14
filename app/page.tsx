@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Quote, Star, BookOpen, Users, Award, GraduationCap, Trophy, ArrowRight, Newspaper, Calendar, MessageSquare, Headphones } from "lucide-react";
 import { TeacherSlider } from "@/components/teachers/teacher-slider";
+import { useState, useEffect } from "react";
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 28 },
@@ -77,6 +78,26 @@ const galleryImages = [
 ];
 
 export default function Home() {
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const heroImages = [
+    "/gambar beranda 1.jpeg",
+    "/gambar beranda 2.jpeg",
+    "/gambar beranda 3.jpeg",
+    "/gambar beranda 4.jpeg",
+    "/gambar beranda 5.jpeg",
+    "/gambar beranda 6.jpeg",
+    "/gambar beranda 7.jpeg",
+    "/gambar beranda 8.jpeg",
+  ];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroImages.length);
+    }, 4500);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <div className="mx-auto flex w-full max-w-7xl flex-col gap-14 px-4 py-8 md:px-6 md:py-12">
 
@@ -128,18 +149,41 @@ export default function Home() {
         </div>
 
         <motion.div
-          className="relative z-10 h-[280px] overflow-hidden rounded-2xl border border-white/20 bg-white/10 shadow-2xl"
+          className="relative z-10 h-[280px] overflow-hidden rounded-2xl border border-white/20 bg-white/10 shadow-2xl md:h-[360px]"
           {...fadeRight(0.3)}
         >
-          <Image
-            src="https://images.unsplash.com/photo-1588072432836-e10032774350?auto=format&fit=crop&w=1200&q=80"
-            alt="Suasana sekolah SDN Simoangin-angin"
-            fill
-            loading="eager"
-            className="object-cover"
-            sizes="(max-width: 768px) 100vw, 50vw"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0f2d52]/30 to-transparent" />
+          {heroImages.map((src, index) => (
+            <motion.div
+              key={src}
+              className="absolute inset-0"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: currentSlide === index ? 1 : 0 }}
+              transition={{ duration: 1 }}
+            >
+              <Image
+                src={src}
+                alt={`Suasana sekolah SDN Simoangin-angin ${index + 1}`}
+                fill
+                loading={index === 0 ? "eager" : "lazy"}
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+            </motion.div>
+          ))}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0f2d52]/50 to-transparent" />
+          
+          <div className="absolute bottom-4 left-0 right-0 z-20 flex justify-center gap-2">
+            {heroImages.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentSlide(index)}
+                className={`h-2 rounded-full transition-all duration-300 ${
+                  currentSlide === index ? "w-6 bg-white" : "w-2 bg-white/50"
+                }`}
+                aria-label={`Go to slide ${index + 1}`}
+              />
+            ))}
+          </div>
         </motion.div>
       </section>
 
@@ -396,7 +440,9 @@ export default function Home() {
               Punya masukan, saran, atau keluhan terkait layanan sekolah? Sampaikan kepada kami untuk mewujudkan sekolah yang lebih baik dan nyaman bagi semuanya.
             </p>
             <Link
-              href="/kontak"
+              href="https://forms.gle/PbEN9U5cUZCdhWfe6"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-full bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-md transition-all duration-200 hover:scale-105 hover:bg-blue-700"
             >
               Kirim Saran / Pengaduan <ArrowRight className="h-4 w-4" />
