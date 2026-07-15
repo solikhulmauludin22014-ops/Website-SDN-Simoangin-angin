@@ -5,7 +5,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Quote, Star, BookOpen, Users, Award, GraduationCap, Trophy, ArrowRight, Newspaper, Calendar, MessageSquare, Headphones } from "lucide-react";
+import { Quote, Star, BookOpen, Users, Award, GraduationCap, Trophy, ArrowRight, Newspaper, Calendar, MessageSquare, Headphones, HelpCircle, ClipboardCheck } from "lucide-react";
 import { TeacherSlider } from "@/components/teachers/teacher-slider";
 import { useState, useEffect } from "react";
 
@@ -481,6 +481,48 @@ export default function Home() {
               className="inline-flex items-center gap-2 rounded-full bg-emerald-600 px-6 py-3 text-sm font-semibold text-white shadow-md transition-all duration-200 hover:scale-105 hover:bg-emerald-700"
             >
               Hubungi Helpdesk <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </div>
+
+        <div className="group relative overflow-hidden rounded-3xl border border-[var(--color-border)] bg-gradient-to-br from-purple-50 to-fuchsia-50 p-8 shadow-sm transition-all duration-300 hover:shadow-lg dark:from-purple-900/20 dark:to-fuchsia-900/20 md:p-10">
+          <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-purple-100/50 transition-transform duration-500 group-hover:scale-150 dark:bg-purple-800/20" />
+          <div className="relative z-10 flex h-full flex-col items-start">
+            <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-purple-600 text-white shadow-md">
+              <HelpCircle className="h-7 w-7" />
+            </div>
+            <h3 className="font-display mb-2 text-2xl font-bold text-heading">FAQ</h3>
+            <p className="mb-8 flex-1 text-sm leading-relaxed text-text-secondary">
+              Temukan jawaban atas pertanyaan yang sering diajukan seputar program, layanan, dan informasi sekolah.
+            </p>
+            <Link
+              href="https://forms.gle/VdrmxEaPWmvyVuGXA"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full bg-purple-600 px-6 py-3 text-sm font-semibold text-white shadow-md transition-all duration-200 hover:scale-105 hover:bg-purple-700"
+            >
+              Lihat FAQ <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </div>
+
+        <div className="group relative overflow-hidden rounded-3xl border border-[var(--color-border)] bg-gradient-to-br from-amber-50 to-orange-50 p-8 shadow-sm transition-all duration-300 hover:shadow-lg dark:from-amber-900/20 dark:to-orange-900/20 md:p-10">
+          <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-amber-100/50 transition-transform duration-500 group-hover:scale-150 dark:bg-amber-800/20" />
+          <div className="relative z-10 flex h-full flex-col items-start">
+            <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-amber-600 text-white shadow-md">
+              <ClipboardCheck className="h-7 w-7" />
+            </div>
+            <h3 className="font-display mb-2 text-2xl font-bold text-heading">Survei Kepuasan</h3>
+            <p className="mb-8 flex-1 text-sm leading-relaxed text-text-secondary">
+              Bantu kami meningkatkan kualitas layanan dengan mengisi survei kepuasan masyarakat. Masukan Anda sangat berarti.
+            </p>
+            <Link
+              href="https://forms.gle/tHHp2Q87jho5RtGR9"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full bg-amber-600 px-6 py-3 text-sm font-semibold text-white shadow-md transition-all duration-200 hover:scale-105 hover:bg-amber-700"
+            >
+              Isi Survei <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
         </div>
