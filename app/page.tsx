@@ -180,15 +180,14 @@ export default function Home() {
             </motion.div>
           ))}
           <div className="absolute inset-0 bg-gradient-to-t from-[#0f2d52]/50 to-transparent" />
-          
+
           <div className="absolute bottom-4 left-0 right-0 z-20 flex justify-center gap-2">
             {heroImages.map((_, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentSlide(index)}
-                className={`h-2 rounded-full transition-all duration-300 ${
-                  currentSlide === index ? "w-6 bg-white" : "w-2 bg-white/50"
-                }`}
+                className={`h-2 rounded-full transition-all duration-300 ${currentSlide === index ? "w-6 bg-white" : "w-2 bg-white/50"
+                  }`}
                 aria-label={`Go to slide ${index + 1}`}
               />
             ))}
@@ -493,7 +492,7 @@ export default function Home() {
             </div>
             <h3 className="font-display mb-2 text-2xl font-bold text-heading">FAQ</h3>
             <p className="mb-8 flex-1 text-sm leading-relaxed text-text-secondary">
-              Temukan jawaban atas pertanyaan yang sering diajukan seputar program, layanan, dan informasi sekolah.
+              Ajukan pertanyaan seputar program, layanan, dan informasi sekolah.
             </p>
             <Link
               href="https://forms.gle/VdrmxEaPWmvyVuGXA"
@@ -501,7 +500,7 @@ export default function Home() {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-full bg-purple-600 px-6 py-3 text-sm font-semibold text-white shadow-md transition-all duration-200 hover:scale-105 hover:bg-purple-700"
             >
-              Lihat FAQ <ArrowRight className="h-4 w-4" />
+              Ajukan pertanyaan<ArrowRight className="h-4 w-4" />
             </Link>
           </div>
         </div>
