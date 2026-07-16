@@ -22,7 +22,7 @@ const profilMenu = [
     color: "text-blue-600 dark:text-blue-400",
     bg: "bg-blue-50 dark:bg-blue-500/10",
     content:
-      "Terwujudnya peserta didik yang beriman, bertakwa, berakhlak mulia, berprestasi, berbudaya, dan berwawasan lingkungan.",
+      "Terwujudnya Peserta didik yang Beriman,Berprestasi dan Berkarakter serta berwawasan global.",
   },
   {
     icon: Target,
@@ -30,7 +30,7 @@ const profilMenu = [
     color: "text-emerald-600 dark:text-emerald-400",
     bg: "bg-emerald-50 dark:bg-emerald-500/10",
     content:
-      "1. Menumbuhkan penghayatan dan pengamalan ajaran agama.\n2. Melaksanakan pembelajaran aktif, kreatif, efektif, dan menyenangkan.\n3. Meningkatkan prestasi akademik dan non-akademik.\n4. Membiasakan budaya bersih, disiplin, dan peduli lingkungan.\n5. Menjalin kemitraan yang harmonis antara sekolah, orang tua, dan masyarakat.",
+      "1. Membangun lingkungan sekolah yang membentuk peserta didik memiliki akhlak mulia melalui rutinitas kegiatan keagamaan dan menerapkan ajaran agama melaui cara berinteraksi di sekolah.\n2. Mengembangkan dan memfasilitasi peningkatan prestasi peserta didik sesuai minat dan bakatnya melalui proses pendampingan dan kerja sama dengan orang tua.\n3. Membiasakan peserta didik melakukan praktik baik untuk penguatan karakterdan peduli lingkungan.\n4. Melaksanakan pembelajaran dan penilaian berbasis teknologi informasi dan komunikasi (TIK), serta berwawasan global.",
   },
   {
     icon: Award,
@@ -45,7 +45,7 @@ const profilMenu = [
     color: "text-purple-600 dark:text-purple-400",
     bg: "bg-purple-50 dark:bg-purple-500/10",
     content:
-      "SDN Simoangin-angin\nWonoayu, Sidoarjo, Jawa Timur\nNPSN: ...\nAkreditasi: A",
+      "SDN Simoangin-angin\nWonoayu, Sidoarjo, Jawa Timur\nNPSN: 20501508\nAkreditasi: A",
   },
 ];
 
