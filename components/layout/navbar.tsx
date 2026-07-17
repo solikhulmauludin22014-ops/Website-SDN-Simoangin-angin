@@ -11,6 +11,7 @@ const mainLinks = [
   { href: "/", label: "Beranda" },
   { href: "/perpustakaan", label: "Perpustakaan" },
   { href: "/ekstrakurikuler", label: "Ekstrakurikuler" },
+  { href: "/maklumat-pelayanan", label: "Pelayanan" },
   { href: "/kontak", label: "Kontak" },
 ];
 
