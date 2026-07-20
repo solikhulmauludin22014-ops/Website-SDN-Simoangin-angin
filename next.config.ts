@@ -28,8 +28,8 @@ const nextConfig: NextConfig = {
     ],
   },
 
-  // Allow googleapis to run in the Node.js runtime (not Edge)
-  serverExternalPackages: ["googleapis"],
+  // Allow googleapis and react-pdf to run in the Node.js runtime (not Edge)
+  serverExternalPackages: ["googleapis", "@react-pdf/renderer"],
 
   experimental: {
     serverActions: {

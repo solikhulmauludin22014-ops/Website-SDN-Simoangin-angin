@@ -10,10 +10,13 @@ import { ThemeToggle } from "@/components/theme-toggle";
 const mainLinks = [
   { href: "/", label: "Beranda" },
   { href: "/perpustakaan", label: "Perpustakaan" },
-  { href: "/layanan-surat", label: "Layanan Surat" },
   { href: "/ekstrakurikuler", label: "Ekstrakurikuler" },
-  { href: "/maklumat-pelayanan", label: "Pelayanan" },
   { href: "/kontak", label: "Kontak" },
+];
+
+const layananLinks = [
+  { href: "/layanan-surat", label: "Layanan Surat" },
+  { href: "/maklumat-pelayanan", label: "Maklumat Pelayanan" },
 ];
 
 
@@ -54,9 +57,11 @@ const profilMenu = [
 export function Navbar() {
   const pathname = usePathname();
   const [profilOpen, setProfilOpen] = useState(false);
+  const [layananOpen, setLayananOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [ripples, setRipples] = useState<{ id: number; x: number; y: number }[]>([]);
   const profilRef = useRef<HTMLDivElement>(null);
+  const layananRef = useRef<HTMLDivElement>(null);
   const nextId = useRef(0);
 
   // Close dropdown when clicking outside
@@ -64,6 +69,9 @@ export function Navbar() {
     function handler(e: MouseEvent) {
       if (profilRef.current && !profilRef.current.contains(e.target as Node)) {
         setProfilOpen(false);
+      }
+      if (layananRef.current && !layananRef.current.contains(e.target as Node)) {
+        setLayananOpen(false);
       }
     }
     document.addEventListener("mousedown", handler);
@@ -150,10 +158,40 @@ export function Navbar() {
               </Link>
             ))}
 
+            {/* Layanan dropdown */}
+            <div ref={layananRef} className="relative">
+              <button
+                onClick={(e) => { addRipple(e); setLayananOpen((v) => !v); setProfilOpen(false); }}
+                className={`relative flex items-center gap-1 overflow-hidden rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 hover:scale-105 hover:bg-[var(--color-surface)] hover:text-heading ${layananOpen ? "bg-[var(--color-surface)] text-heading" : "text-[var(--color-ink)]"
+                  }`}
+              >
+                Layanan
+                <ChevronDown
+                  className={`h-4 w-4 transition-transform duration-300 ${layananOpen ? "rotate-180" : ""}`}
+                />
+              </button>
+
+              {layananOpen && (
+                <div className="absolute left-0 top-full mt-2 w-48 animate-in fade-in slide-in-from-top-2 rounded-xl border border-[var(--color-border)] bg-white dark:bg-[var(--color-surface)] p-2 shadow-xl duration-200">
+                  {layananLinks.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      onClick={() => setLayananOpen(false)}
+                      className={`block rounded-lg px-3 py-2.5 text-sm font-medium transition-colors hover:bg-[var(--color-bg)] ${isActive(link.href) ? "text-[var(--color-primary)] font-semibold" : "text-[var(--color-ink)]"
+                        }`}
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
             {/* Profil Sekolah dropdown */}
             <div ref={profilRef} className="relative">
               <button
-                onClick={(e) => { addRipple(e); setProfilOpen((v) => !v); }}
+                onClick={(e) => { addRipple(e); setProfilOpen((v) => !v); setLayananOpen(false); }}
                 className={`relative flex items-center gap-1 overflow-hidden rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 hover:scale-105 hover:bg-[var(--color-surface)] hover:text-heading ${profilOpen ? "bg-[var(--color-surface)] text-heading" : "text-[var(--color-ink)]"
                   }`}
               >
@@ -240,6 +278,24 @@ export function Navbar() {
                   {link.label}
                 </Link>
               ))}
+
+              {/* Mobile Layanan section */}
+              <div className="mt-1 rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)]/50 p-2">
+                <p className="mb-1 px-2 text-xs font-semibold uppercase tracking-widest text-text-secondary">Layanan</p>
+                {layananLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setMobileOpen(false)}
+                    className={`block rounded-lg px-2 py-2 text-sm font-medium transition-colors ${isActive(link.href)
+                      ? "bg-[var(--color-surface)] text-[var(--color-primary)]"
+                      : "hover:bg-[var(--color-surface)]"
+                      }`}
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </div>
 
               {/* Mobile profil section */}
               <div className="mt-2 rounded-xl bg-[var(--color-surface)] p-3">
