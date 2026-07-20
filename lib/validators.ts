@@ -23,3 +23,31 @@ export const bookSchema = z.object({
 
 export type CategoryInput = z.infer<typeof categorySchema>;
 export type BookInput = z.infer<typeof bookSchema>;
+
+/* ── Layanan Surat ──────────────────────────────────────────── */
+
+export const letterRequestSchema = z.object({
+  letterType: z.enum(["ACTIVE_STUDENT", "TRANSFER", "OTHER"]),
+  applicantName: z.string().min(2, "Nama pemohon wajib diisi").max(200),
+  applicantPhone: z.string().min(8, "No HP minimal 8 digit").max(20),
+  applicantEmail: z.string().email("Format email tidak valid").optional().or(z.literal("")),
+  studentName: z.string().min(2, "Nama siswa wajib diisi").max(200),
+  nisn: z.string().min(4, "NISN wajib diisi").max(20),
+  studentClass: z.string().min(1, "Kelas wajib diisi").max(20),
+  birthPlace: z.string().min(2, "Tempat lahir wajib diisi").max(100),
+  birthDate: z.coerce.date({ required_error: "Tanggal lahir wajib diisi" }),
+  parentName: z.string().min(2, "Nama orang tua/wali wajib diisi").max(200),
+  address: z.string().min(5, "Alamat wajib diisi").max(1000),
+  purpose: z.string().min(5, "Keperluan wajib diisi").max(2000),
+  notes: z.string().max(2000).optional().or(z.literal("")),
+});
+
+export const letterUpdateSchema = z.object({
+  status: z.enum(["PENDING", "PROCESSING", "COMPLETED", "REJECTED"]),
+  officialNumber: z.string().max(100).optional().or(z.literal("")),
+  officialDate: z.coerce.date().optional().or(z.literal("")),
+  adminNotes: z.string().max(2000).optional().or(z.literal("")),
+});
+
+export type LetterRequestInput = z.infer<typeof letterRequestSchema>;
+export type LetterUpdateInput = z.infer<typeof letterUpdateSchema>;

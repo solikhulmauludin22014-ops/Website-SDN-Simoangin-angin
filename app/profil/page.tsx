@@ -203,7 +203,7 @@ export default function ProfilPage() {
             <address className="not-italic space-y-3 text-text-secondary">
               <div className="flex items-start gap-3">
                 <MapPin className="mt-0.5 h-4 w-4 flex-shrink-0 text-accent-text" />
-                <span>Jl. Simoangin-angin RT. 07/RW. 04, Wonoayu, Sidoarjo, Jawa Timur</span>
+                <span>Jl. Simoangin-angin RT. 08/RW. 04, Wonoayu, Sidoarjo, Jawa Timur</span>
               </div>
               <div className="flex items-center gap-3">
                 <Phone className="h-4 w-4 flex-shrink-0 text-accent-text" />

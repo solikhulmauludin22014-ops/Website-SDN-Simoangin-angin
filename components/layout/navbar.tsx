@@ -10,6 +10,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 const mainLinks = [
   { href: "/", label: "Beranda" },
   { href: "/perpustakaan", label: "Perpustakaan" },
+  { href: "/layanan-surat", label: "Layanan Surat" },
   { href: "/ekstrakurikuler", label: "Ekstrakurikuler" },
   { href: "/maklumat-pelayanan", label: "Pelayanan" },
   { href: "/kontak", label: "Kontak" },

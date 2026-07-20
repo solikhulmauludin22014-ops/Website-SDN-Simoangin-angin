@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
 import { cn } from "@/lib/utils";
-import { LayoutDashboard, BookOpen, FolderTree, ChartNoAxesColumn } from "lucide-react";
+import { LayoutDashboard, BookOpen, FolderTree, ChartNoAxesColumn, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 
@@ -12,6 +12,7 @@ const menu = [
   { href: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/admin/buku", label: "Kelola Buku", icon: BookOpen },
   { href: "/admin/kategori", label: "Kelola Kategori", icon: FolderTree },
+  { href: "/admin/layanan-surat", label: "Layanan Surat", icon: FileText },
   { href: "/admin/dashboard#statistik", label: "Statistik", icon: ChartNoAxesColumn },
 ];
 

@@ -5,7 +5,7 @@ import { StatsChart } from "@/components/admin/stats-chart";
 export const dynamic = "force-dynamic";
 
 export default async function AdminDashboardPage() {
-  const [bookCount, categoryCount, topViewed] = await Promise.all([
+  const [bookCount, categoryCount, topViewed, letterTotal, letterPending, letterCompleted] = await Promise.all([
     prisma.book.count(),
     prisma.category.count(),
     prisma.book.findMany({
@@ -13,6 +13,9 @@ export default async function AdminDashboardPage() {
       take: 5,
       select: { title: true, viewCount: true },
     }),
+    prisma.letterRequest.count(),
+    prisma.letterRequest.count({ where: { status: "PENDING" } }),
+    prisma.letterRequest.count({ where: { status: "COMPLETED" } }),
   ]);
 
   const topViewedBooks = topViewed as { title: string; viewCount: number }[];
@@ -55,6 +58,29 @@ export default async function AdminDashboardPage() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Statistik Layanan Surat */}
+      <div className="grid gap-4 md:grid-cols-3">
+        <Card className="border-l-4 border-l-blue-500">
+          <CardHeader>
+            <CardTitle className="text-sm font-medium text-text-muted">Total Pengajuan Surat</CardTitle>
+          </CardHeader>
+          <CardContent className="text-3xl font-bold">{letterTotal}</CardContent>
+        </Card>
+        <Card className="border-l-4 border-l-yellow-500">
+          <CardHeader>
+            <CardTitle className="text-sm font-medium text-text-muted">Menunggu Proses</CardTitle>
+          </CardHeader>
+          <CardContent className="text-3xl font-bold text-yellow-600">{letterPending}</CardContent>
+        </Card>
+        <Card className="border-l-4 border-l-green-500">
+          <CardHeader>
+            <CardTitle className="text-sm font-medium text-text-muted">Selesai</CardTitle>
+          </CardHeader>
+          <CardContent className="text-3xl font-bold text-green-600">{letterCompleted}</CardContent>
+        </Card>
+      </div>
+
       <Card id="statistik">
         <CardHeader>
           <CardTitle>Statistik Sederhana</CardTitle>
@@ -66,3 +92,4 @@ export default async function AdminDashboardPage() {
     </section>
   );
 }
+
