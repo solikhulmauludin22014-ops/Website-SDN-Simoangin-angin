@@ -14,6 +14,7 @@ import { LETTER_TYPE_LABELS } from "@/lib/school-config";
 export default function LayananSuratPage() {
   const [state, formAction, isPending] = useActionState(submitLetterRequest, null);
   const [copied, setCopied] = useState(false);
+  const [selectedType, setSelectedType] = useState("");
 
   function copyTicket() {
     if (state?.ticketNumber) {
@@ -124,7 +125,8 @@ export default function LayananSuratPage() {
                 id="letterType"
                 name="letterType"
                 required
-                defaultValue=""
+                value={selectedType}
+                onChange={(e) => setSelectedType(e.target.value)}
                 className="flex h-10 w-full rounded-md border border-[var(--color-border)] bg-white px-3 py-2 text-sm dark:bg-[var(--color-surface)]"
               >
                 <option value="" disabled>
@@ -232,6 +234,76 @@ export default function LayananSuratPage() {
                 )}
               </div>
             </fieldset>
+
+            {/* Conditional Fields: TRANSFER (Pindah Sekolah) */}
+            {selectedType === "TRANSFER" && (
+              <fieldset className="space-y-4 rounded-xl border border-blue-200 bg-blue-50/30 p-4 dark:border-blue-900 dark:bg-blue-900/10">
+                <legend className="px-2 text-sm font-semibold text-blue-700 dark:text-blue-400">Data Pindah Sekolah</legend>
+                <div className="grid gap-4 md:grid-cols-2">
+                  <div className="space-y-2">
+                    <Label htmlFor="gender">Jenis Kelamin *</Label>
+                    <select
+                      id="gender"
+                      name="gender"
+                      required
+                      defaultValue=""
+                      className="flex h-10 w-full rounded-md border border-[var(--color-border)] bg-white px-3 py-2 text-sm dark:bg-[var(--color-surface)]"
+                    >
+                      <option value="" disabled>Pilih</option>
+                      <option value="Laki-laki">Laki-laki</option>
+                      <option value="Perempuan">Perempuan</option>
+                    </select>
+                    {state?.fieldErrors?.gender && (
+                      <p className="text-xs text-red-500">{state.fieldErrors.gender[0]}</p>
+                    )}
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="parentJob">Pekerjaan Orang Tua *</Label>
+                    <Input id="parentJob" name="parentJob" required placeholder="Contoh: Wiraswasta" />
+                    {state?.fieldErrors?.parentJob && (
+                      <p className="text-xs text-red-500">{state.fieldErrors.parentJob[0]}</p>
+                    )}
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="targetSchool">Sekolah Tujuan *</Label>
+                  <Textarea id="targetSchool" name="targetSchool" required placeholder="Nama dan alamat sekolah tujuan" rows={2} />
+                  {state?.fieldErrors?.targetSchool && (
+                    <p className="text-xs text-red-500">{state.fieldErrors.targetSchool[0]}</p>
+                  )}
+                </div>
+              </fieldset>
+            )}
+
+            {/* Conditional Fields: ACCEPTANCE (Penerimaan Siswa Pindahan) */}
+            {selectedType === "ACCEPTANCE" && (
+              <fieldset className="space-y-4 rounded-xl border border-emerald-200 bg-emerald-50/30 p-4 dark:border-emerald-900 dark:bg-emerald-900/10">
+                <legend className="px-2 text-sm font-semibold text-emerald-700 dark:text-emerald-400">Data Siswa Pindahan</legend>
+                <div className="space-y-2">
+                  <Label htmlFor="previousSchool">Sekolah Asal *</Label>
+                  <Input id="previousSchool" name="previousSchool" required placeholder="Contoh: SDN Cukir 1" />
+                  {state?.fieldErrors?.previousSchool && (
+                    <p className="text-xs text-red-500">{state.fieldErrors.previousSchool[0]}</p>
+                  )}
+                </div>
+                <div className="grid gap-4 md:grid-cols-2">
+                  <div className="space-y-2">
+                    <Label htmlFor="fatherName">Nama Ayah *</Label>
+                    <Input id="fatherName" name="fatherName" required placeholder="Nama lengkap ayah" />
+                    {state?.fieldErrors?.fatherName && (
+                      <p className="text-xs text-red-500">{state.fieldErrors.fatherName[0]}</p>
+                    )}
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="motherName">Nama Ibu *</Label>
+                    <Input id="motherName" name="motherName" required placeholder="Nama lengkap ibu" />
+                    {state?.fieldErrors?.motherName && (
+                      <p className="text-xs text-red-500">{state.fieldErrors.motherName[0]}</p>
+                    )}
+                  </div>
+                </div>
+              </fieldset>
+            )}
 
             {/* Keperluan */}
             <div className="space-y-2">

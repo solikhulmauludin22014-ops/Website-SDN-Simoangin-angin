@@ -22,8 +22,9 @@ export const PRINCIPAL = {
 
 /** Label jenis surat (mapping enum → teks tampilan) */
 export const LETTER_TYPE_LABELS: Record<string, string> = {
-  ACTIVE_STUDENT: "Surat Keterangan Aktif Siswa",
-  TRANSFER: "Surat Keterangan Pindah (Mutasi)",
+  ACTIVE_STUDENT: "Surat Keterangan Siswa Aktif",
+  TRANSFER: "Surat Keterangan Pindah Sekolah",
+  ACCEPTANCE: "Surat Penerimaan Siswa Pindahan",
   OTHER: "Surat Keterangan Lainnya",
 };
 

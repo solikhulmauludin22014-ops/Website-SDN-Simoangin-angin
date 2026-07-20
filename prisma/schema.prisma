@@ -50,6 +50,7 @@ model Book {
 enum LetterType {
   ACTIVE_STUDENT
   TRANSFER
+  ACCEPTANCE
   OTHER
 }
 
@@ -72,6 +73,14 @@ model LetterRequest {
   studentClass   String
   birthPlace     String
   birthDate      DateTime
+
+  gender         String?
+  parentJob      String?
+  targetSchool   String?
+  previousSchool String?
+  fatherName     String?
+  motherName     String?
+
   parentName     String
   address        String        @db.Text
   purpose        String        @db.Text

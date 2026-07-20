@@ -13,6 +13,7 @@ import { LETTER_TYPE_LABELS } from "@/lib/school-config";
 export function LetterRequestForm() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [selectedType, setSelectedType] = useState("");
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -30,6 +31,14 @@ export function LetterRequestForm() {
       studentClass: String(form.get("studentClass") ?? "").trim(),
       birthPlace: String(form.get("birthPlace") ?? "").trim(),
       birthDate: String(form.get("birthDate") ?? ""),
+      
+      gender: String(form.get("gender") ?? "") || undefined,
+      parentJob: String(form.get("parentJob") ?? "").trim() || undefined,
+      targetSchool: String(form.get("targetSchool") ?? "").trim() || undefined,
+      previousSchool: String(form.get("previousSchool") ?? "").trim() || undefined,
+      fatherName: String(form.get("fatherName") ?? "").trim() || undefined,
+      motherName: String(form.get("motherName") ?? "").trim() || undefined,
+
       parentName: String(form.get("parentName") ?? "").trim(),
       address: String(form.get("address") ?? "").trim(),
       purpose: String(form.get("purpose") ?? "").trim(),
@@ -68,7 +77,8 @@ export function LetterRequestForm() {
               id="letterType"
               name="letterType"
               required
-              defaultValue=""
+              value={selectedType}
+              onChange={(e) => setSelectedType(e.target.value)}
               className="flex h-10 w-full rounded-md border border-[var(--color-border)] bg-white px-3 py-2 text-sm dark:bg-[var(--color-surface)]"
             >
               <option value="" disabled>Pilih jenis surat</option>
@@ -133,6 +143,58 @@ export function LetterRequestForm() {
               <Textarea id="address" name="address" required rows={3} />
             </div>
           </fieldset>
+
+          {/* Conditional Fields: TRANSFER (Pindah Sekolah) */}
+          {selectedType === "TRANSFER" && (
+            <fieldset className="space-y-4 rounded-xl border border-blue-200 bg-blue-50/30 p-4 dark:border-blue-900 dark:bg-blue-900/10">
+              <legend className="px-2 text-sm font-semibold text-blue-700 dark:text-blue-400">Data Pindah Sekolah</legend>
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="space-y-2">
+                  <Label htmlFor="gender">Jenis Kelamin *</Label>
+                  <select
+                    id="gender"
+                    name="gender"
+                    required
+                    defaultValue=""
+                    className="flex h-10 w-full rounded-md border border-[var(--color-border)] bg-white px-3 py-2 text-sm dark:bg-[var(--color-surface)]"
+                  >
+                    <option value="" disabled>Pilih</option>
+                    <option value="Laki-laki">Laki-laki</option>
+                    <option value="Perempuan">Perempuan</option>
+                  </select>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="parentJob">Pekerjaan Orang Tua *</Label>
+                  <Input id="parentJob" name="parentJob" required />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="targetSchool">Sekolah Tujuan *</Label>
+                <Textarea id="targetSchool" name="targetSchool" required rows={2} />
+              </div>
+            </fieldset>
+          )}
+
+          {/* Conditional Fields: ACCEPTANCE (Penerimaan Siswa Pindahan) */}
+          {selectedType === "ACCEPTANCE" && (
+            <fieldset className="space-y-4 rounded-xl border border-emerald-200 bg-emerald-50/30 p-4 dark:border-emerald-900 dark:bg-emerald-900/10">
+              <legend className="px-2 text-sm font-semibold text-emerald-700 dark:text-emerald-400">Data Siswa Pindahan</legend>
+              <div className="space-y-2">
+                <Label htmlFor="previousSchool">Sekolah Asal *</Label>
+                <Input id="previousSchool" name="previousSchool" required />
+              </div>
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="space-y-2">
+                  <Label htmlFor="fatherName">Nama Ayah *</Label>
+                  <Input id="fatherName" name="fatherName" required />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="motherName">Nama Ibu *</Label>
+                  <Input id="motherName" name="motherName" required />
+                </div>
+              </div>
+            </fieldset>
+          )}
 
           {/* Keperluan */}
           <div className="space-y-2">

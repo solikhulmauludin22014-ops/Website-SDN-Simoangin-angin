@@ -31,6 +31,14 @@ export async function submitLetterRequest(
     studentClass: String(formData.get("studentClass") ?? "").trim(),
     birthPlace: String(formData.get("birthPlace") ?? "").trim(),
     birthDate: String(formData.get("birthDate") ?? ""),
+    
+    gender: String(formData.get("gender") ?? "") || undefined,
+    parentJob: String(formData.get("parentJob") ?? "").trim() || undefined,
+    targetSchool: String(formData.get("targetSchool") ?? "").trim() || undefined,
+    previousSchool: String(formData.get("previousSchool") ?? "").trim() || undefined,
+    fatherName: String(formData.get("fatherName") ?? "").trim() || undefined,
+    motherName: String(formData.get("motherName") ?? "").trim() || undefined,
+
     parentName: String(formData.get("parentName") ?? "").trim(),
     address: String(formData.get("address") ?? "").trim(),
     purpose: String(formData.get("purpose") ?? "").trim(),
@@ -59,6 +67,14 @@ export async function submitLetterRequest(
         studentClass: parsed.data.studentClass,
         birthPlace: parsed.data.birthPlace,
         birthDate: parsed.data.birthDate,
+        
+        gender: parsed.data.gender || null,
+        parentJob: parsed.data.parentJob || null,
+        targetSchool: parsed.data.targetSchool || null,
+        previousSchool: parsed.data.previousSchool || null,
+        fatherName: parsed.data.fatherName || null,
+        motherName: parsed.data.motherName || null,
+
         parentName: parsed.data.parentName,
         address: parsed.data.address,
         purpose: parsed.data.purpose,

@@ -39,6 +39,12 @@ export async function GET(request: NextRequest, { params }: Params) {
     purpose: record.purpose,
     officialNumber: record.officialNumber,
     officialDate: record.officialDate ?? new Date(),
+    gender: record.gender,
+    parentJob: record.parentJob,
+    targetSchool: record.targetSchool,
+    previousSchool: record.previousSchool,
+    fatherName: record.fatherName,
+    motherName: record.motherName,
   };
 
   const buffer = await renderToBuffer(
