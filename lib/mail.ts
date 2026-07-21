@@ -90,7 +90,7 @@ export async function sendLetterStatusEmail(
 
   try {
     const info = await transporter.sendMail({
-      from: \`"\${SCHOOL.NAME}" <\${process.env.SMTP_EMAIL}>\`,
+      from: `"${SCHOOL.NAME}" <${process.env.SMTP_EMAIL}>`,
       to: toEmail,
       subject: subject,
       html: htmlContent,
