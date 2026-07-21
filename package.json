@@ -40,7 +40,8 @@
     "sonner": "^2.0.7",
     "swr": "^2.4.2",
     "tailwind-merge": "^3.6.0",
-    "zod": "^4.4.3"
+    "zod": "^4.4.3",
+    "nodemailer": "^6.9.14"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
@@ -51,7 +52,8 @@
     "eslint-config-next": "16.2.10",
     "tailwindcss": "^4",
     "tsx": "^4.23.0",
-    "typescript": "^5"
+    "typescript": "^5",
+    "@types/nodemailer": "^6.4.15"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

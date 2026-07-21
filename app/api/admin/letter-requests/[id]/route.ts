@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireAdminSession } from "@/lib/require-admin";
 import { letterUpdateSchema } from "@/lib/validators";
+import { sendLetterStatusEmail } from "@/lib/mail";
 
 type Params = { params: Promise<{ id: string }> };
 
@@ -57,6 +58,25 @@ export async function PATCH(request: Request, { params }: Params) {
     where: { id },
     data: updateData,
   });
+
+  // Check if status changed to COMPLETED or REJECTED and an email is provided
+  if (
+    record.applicantEmail &&
+    (record.status === "COMPLETED" || record.status === "REJECTED")
+  ) {
+    // Determine if we need to send an email (only if status is newly set in this request)
+    // parsed.data.status is the newly requested status
+    if (parsed.data.status === "COMPLETED" || parsed.data.status === "REJECTED") {
+      // Fire and forget so we don't block the API response
+      sendLetterStatusEmail(
+        record.applicantEmail,
+        record.applicantName,
+        record.ticketNumber,
+        record.status,
+        record.adminNotes
+      ).catch((err) => console.error("Error firing email:", err));
+    }
+  }
 
   return NextResponse.json(record);
 }
