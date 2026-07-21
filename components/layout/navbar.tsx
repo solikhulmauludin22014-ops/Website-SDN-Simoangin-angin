@@ -17,6 +17,7 @@ const mainLinks = [
 const layananLinks = [
   { href: "/layanan-surat", label: "Layanan Surat" },
   { href: "/maklumat-pelayanan", label: "Maklumat Pelayanan" },
+  { href: "/standar-pelayanan", label: "Standar Pelayanan" },
 ];
 
 
