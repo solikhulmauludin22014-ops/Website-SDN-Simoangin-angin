@@ -17,7 +17,7 @@ export async function sendLetterStatusEmail(
   toEmail: string,
   applicantName: string,
   ticketNumber: string,
-  status: "COMPLETED" | "REJECTED",
+  status: string,
   notes?: string | null
 ) {
   if (!process.env.SMTP_EMAIL || !process.env.SMTP_PASSWORD) {
