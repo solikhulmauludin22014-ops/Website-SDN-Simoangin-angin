@@ -57,5 +57,8 @@
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
+  },
+  "overrides": {
+    "nodemailer": "^6.9.14"
   }
 }
