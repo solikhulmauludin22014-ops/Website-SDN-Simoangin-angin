@@ -63,16 +63,15 @@ export async function sendLetterStatusEmail(
 
       <p>${actionText}</p>
 
-      ${
-        notes
-          ? `
+      ${notes
+      ? `
       <div style="background-color: #fffbeb; border: 1px solid #fcd34d; padding: 15px; border-radius: 8px; margin: 20px 0;">
         <p style="margin: 0 0 5px 0; font-weight: bold; font-size: 13px; color: #b45309;">Catatan dari Admin:</p>
         <p style="margin: 0; font-style: italic; color: #78350f;">"${notes}"</p>
       </div>
       `
-          : ""
-      }
+      : ""
+    }
 
       <div style="text-align: center; margin-top: 30px;">
         <a href="https://website-sdn-simoangin-angin.vercel.app/layanan-surat/cek?ticket=${ticketNumber}" 
