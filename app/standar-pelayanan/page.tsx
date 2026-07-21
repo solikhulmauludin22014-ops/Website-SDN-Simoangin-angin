@@ -39,9 +39,10 @@ export default function StandarPelayananPage() {
         transition={{ duration: 0.7, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
         className="overflow-hidden rounded-3xl border border-[var(--color-border)] bg-white p-2 shadow-xl dark:bg-[var(--color-surface)] md:p-4"
       >
-        <div className="relative flex w-full justify-center h-[80vh] min-h-[600px] rounded-2xl overflow-hidden bg-gray-100 dark:bg-neutral-900">
+        <div className="relative flex w-full justify-center h-[80vh] min-h-[600px] rounded-2xl overflow-hidden bg-gray-100 dark:bg-neutral-900 border border-[var(--color-border)]">
+          {/* We use iframe to embed the PDF viewer provided by the browser */}
           <iframe
-            src="/standar-pelayanan.pdf#view=FitH"
+            src="/SK_Standar_Pelayanan.pdf#view=FitH"
             className="h-full w-full border-none"
             title="Standar Pelayanan PDF"
           />
