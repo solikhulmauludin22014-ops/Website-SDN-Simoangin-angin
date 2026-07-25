@@ -5,6 +5,7 @@ import {
   Text,
   View,
   StyleSheet,
+  Image,
 } from "@react-pdf/renderer";
 import { SCHOOL, PRINCIPAL } from "@/lib/school-config";
 
@@ -23,10 +24,23 @@ const styles = StyleSheet.create({
   },
   // KOP SURAT
   headerContainer: {
+    flexDirection: "row",
     borderBottomWidth: 3,
     borderBottomColor: "#000",
     paddingBottom: 10,
     marginBottom: 20,
+    alignItems: "center",
+  },
+  headerLogoContainer: {
+    width: 60,
+    alignItems: "center",
+  },
+  headerLogo: {
+    width: 60,
+    height: 60,
+  },
+  headerTextContainer: {
+    flex: 1,
     alignItems: "center",
   },
   headerGov: {
@@ -167,6 +181,7 @@ type LetterData = {
   previousSchool?: string | null;
   fatherName?: string | null;
   motherName?: string | null;
+  logoSdn?: string;
 };
 
 // Formatter for Indonesian Dates
@@ -178,13 +193,22 @@ const formatDate = (date: Date) => {
   return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
 };
 
-const KopSurat = () => (
+const KopSurat = ({ logoSdn }: { logoSdn?: string }) => (
   <View style={styles.headerContainer}>
-    <Text style={styles.headerGov}>PEMERINTAH KABUPATEN SIDOARJO</Text>
-    <Text style={styles.headerDept}>DINAS PENDIDIKAN DAN KEBUDAYAAN</Text>
-    <Text style={styles.headerSchool}>{SCHOOL.NAME}</Text>
-    <Text style={styles.headerAddress}>{SCHOOL.ADDRESS}</Text>
-    <Text style={styles.headerContact}>Pos-el {SCHOOL.EMAIL}</Text>
+    <View style={styles.headerLogoContainer}>
+      {logoSdn && <Image src={logoSdn} style={styles.headerLogo} />}
+    </View>
+    <View style={styles.headerTextContainer}>
+      <Text style={styles.headerGov}>PEMERINTAH KABUPATEN SIDOARJO</Text>
+      <Text style={styles.headerDept}>DINAS PENDIDIKAN DAN KEBUDAYAAN</Text>
+      <Text style={styles.headerSchool}>{SCHOOL.NAME}</Text>
+      <Text style={styles.headerAddress}>{SCHOOL.ADDRESS}</Text>
+      <Text style={styles.headerContact}>Pos-el {SCHOOL.EMAIL}</Text>
+    </View>
+    <View style={styles.headerLogoContainer}>
+      {/* Jika ada logo Tut Wuri, bisa ditaruh di sini. Untuk sementara kosong atau pakai logo yang sama */}
+      {logoSdn && <Image src={logoSdn} style={styles.headerLogo} />}
+    </View>
   </View>
 );
 
@@ -214,7 +238,7 @@ export const LetterPdf = ({ data }: { data: LetterData }) => {
     return (
       <Document>
         <Page size="A4" style={styles.page}>
-          <KopSurat />
+          <KopSurat logoSdn={data.logoSdn} />
           
           <View style={styles.titleContainer}>
             <Text style={styles.title}>SURAT KETERANGAN</Text>
@@ -232,7 +256,7 @@ export const LetterPdf = ({ data }: { data: LetterData }) => {
           </View>
           <View style={styles.row}>
             <Text style={styles.colLabel}>Jabatan</Text><Text style={styles.colColon}>:</Text>
-            <Text style={styles.colValue}>Plt Kepala Sekolah SD Negeri Simoangin-angin</Text>
+            <Text style={styles.colValue}>Kepala Sekolah SD Negeri Simoangin-angin</Text>
           </View>
           
           <Text style={styles.text}>menerangkan dengan sesungguhnya bahwa:</Text>
@@ -276,7 +300,7 @@ export const LetterPdf = ({ data }: { data: LetterData }) => {
               <Text style={styles.signatureText}>Kepala SD Negeri Simoangin-angin</Text>
               <View style={styles.signatureSpace} />
               <Text style={styles.signatureName}>{PRINCIPAL.NAME}</Text>
-              <Text style={styles.signatureNip}>NIP. .{PRINCIPAL.NIP}</Text>
+              <Text style={styles.signatureNip}>NIP. {PRINCIPAL.NIP}</Text>
             </View>
           </View>
         </Page>
@@ -291,7 +315,7 @@ export const LetterPdf = ({ data }: { data: LetterData }) => {
     return (
       <Document>
         <Page size="A4" style={styles.page}>
-          <KopSurat />
+          <KopSurat logoSdn={data.logoSdn} />
           
           <View style={styles.titleContainer}>
             <Text style={styles.title}>SURAT KETERANGAN PINDAH SEKOLAH</Text>
@@ -362,7 +386,7 @@ export const LetterPdf = ({ data }: { data: LetterData }) => {
   return (
     <Document>
       <Page size="A4" style={styles.page}>
-        <KopSurat />
+        <KopSurat logoSdn={data.logoSdn} />
         
         <View style={styles.titleContainer}>
           <Text style={styles.title}>SURAT KETERANGAN PENERIMAAN SISWA PINDAHAN</Text>

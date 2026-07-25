@@ -15,8 +15,8 @@ export const SCHOOL = {
 } as const;
 
 export const PRINCIPAL = {
-  name: "Dra. Siti Aminah, M.Pd",
-  nip: "196805151993032008",
+  name: "Hadis Asy'ari, S.Pd.",
+  nip: "198403302010011015",
   title: "Kepala Sekolah",
 } as const;
 

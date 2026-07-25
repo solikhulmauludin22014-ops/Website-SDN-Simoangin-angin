@@ -4,6 +4,8 @@ import React from "react";
 import { prisma } from "@/lib/prisma";
 import { requireAdminSession } from "@/lib/require-admin";
 import { LetterPdf } from "@/components/pdf/letter-pdf";
+import fs from "fs";
+import path from "path";
 
 type Params = { params: Promise<{ id: string }> };
 
@@ -27,6 +29,17 @@ export async function GET(request: NextRequest, { params }: Params) {
     );
   }
 
+  let logoSdnBase64 = "";
+  try {
+    const logoPath = path.join(process.cwd(), "public", "logo-sdn.png.png");
+    if (fs.existsSync(logoPath)) {
+      const logoBuffer = fs.readFileSync(logoPath);
+      logoSdnBase64 = `data:image/png;base64,${logoBuffer.toString("base64")}`;
+    }
+  } catch (e) {
+    console.error("Failed to read logo", e);
+  }
+
   const pdfData = {
     letterType: record.letterType,
     studentName: record.studentName,
@@ -45,6 +58,7 @@ export async function GET(request: NextRequest, { params }: Params) {
     previousSchool: record.previousSchool,
     fatherName: record.fatherName,
     motherName: record.motherName,
+    logoSdn: logoSdnBase64,
   };
 
   const buffer = await renderToBuffer(
