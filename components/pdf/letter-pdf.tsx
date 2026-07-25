@@ -201,12 +201,12 @@ const KopSurat = ({ logoSdn }: { logoSdn?: string }) => (
     <View style={styles.headerTextContainer}>
       <Text style={styles.headerGov}>PEMERINTAH KABUPATEN SIDOARJO</Text>
       <Text style={styles.headerDept}>DINAS PENDIDIKAN DAN KEBUDAYAAN</Text>
-      <Text style={styles.headerSchool}>{SCHOOL.NAME}</Text>
-      <Text style={styles.headerAddress}>{SCHOOL.ADDRESS}</Text>
-      <Text style={styles.headerContact}>Pos-el {SCHOOL.EMAIL}</Text>
+      <Text style={styles.headerSchool}>{SCHOOL.name}</Text>
+      <Text style={styles.headerAddress}>{SCHOOL.address}</Text>
+      <Text style={styles.headerContact}>Telp. {SCHOOL.phone}   Pos-el: {SCHOOL.email}   Web: {SCHOOL.website}</Text>
+      <Text style={styles.headerContact}>NPSN: {SCHOOL.npsn}</Text>
     </View>
     <View style={styles.headerLogoContainer}>
-      {/* Jika ada logo Tut Wuri, bisa ditaruh di sini. Untuk sementara kosong atau pakai logo yang sama */}
       {logoSdn && <Image src={logoSdn} style={styles.headerLogo} />}
     </View>
   </View>
@@ -216,13 +216,12 @@ const Signature = ({ officialDate, isHeadmaster = true }: { officialDate: Date, 
   <View style={styles.signatureContainer}>
     <View style={styles.signatureBox}>
       <Text style={styles.signatureText}>Wonoayu, {formatDate(officialDate)}</Text>
-      <Text style={styles.signatureText}>{isHeadmaster ? "Kepala SDN Simoangin-angin" : "Mengetahui"}</Text>
-      {isHeadmaster ? null : <Text style={styles.signatureText}>Kepala SD Negeri Simoangin-angin</Text>}
+      <Text style={styles.signatureText}>Kepala SD Negeri Simoangin-angin,</Text>
       
       <View style={styles.signatureSpace} />
       
-      <Text style={styles.signatureName}>{PRINCIPAL.NAME}</Text>
-      <Text style={styles.signatureNip}>NIP. {PRINCIPAL.NIP}</Text>
+      <Text style={styles.signatureName}>{PRINCIPAL.name}</Text>
+      <Text style={styles.signatureNip}>NIP. {PRINCIPAL.nip}</Text>
     </View>
   </View>
 );
@@ -248,11 +247,11 @@ export const LetterPdf = ({ data }: { data: LetterData }) => {
           <Text style={styles.text}>Yang bertanda tangan di bawah ini :</Text>
           <View style={styles.row}>
             <Text style={styles.colLabel}>N a m a</Text><Text style={styles.colColon}>:</Text>
-            <Text style={styles.colValue}>{PRINCIPAL.NAME}</Text>
+            <Text style={styles.colValue}>{PRINCIPAL.name}</Text>
           </View>
           <View style={styles.row}>
             <Text style={styles.colLabel}>NIP</Text><Text style={styles.colColon}>:</Text>
-            <Text style={styles.colValue}>{PRINCIPAL.NIP}</Text>
+            <Text style={styles.colValue}>{PRINCIPAL.nip}</Text>
           </View>
           <View style={styles.row}>
             <Text style={styles.colLabel}>Jabatan</Text><Text style={styles.colColon}>:</Text>
@@ -295,12 +294,11 @@ export const LetterPdf = ({ data }: { data: LetterData }) => {
           
           <View style={styles.signatureContainer}>
             <View style={styles.signatureBox}>
-              <Text style={styles.signatureText}>Simoangin-angin, {formatDate(data.officialDate)}</Text>
-              <Text style={styles.signatureText}>Mengetahui</Text>
-              <Text style={styles.signatureText}>Kepala SD Negeri Simoangin-angin</Text>
+              <Text style={styles.signatureText}>Wonoayu, {formatDate(data.officialDate)}</Text>
+              <Text style={styles.signatureText}>Kepala SD Negeri Simoangin-angin,</Text>
               <View style={styles.signatureSpace} />
-              <Text style={styles.signatureName}>{PRINCIPAL.NAME}</Text>
-              <Text style={styles.signatureNip}>NIP. {PRINCIPAL.NIP}</Text>
+              <Text style={styles.signatureName}>{PRINCIPAL.name}</Text>
+              <Text style={styles.signatureNip}>NIP. {PRINCIPAL.nip}</Text>
             </View>
           </View>
         </Page>
@@ -474,8 +472,8 @@ export const LetterPdf = ({ data }: { data: LetterData }) => {
             
             <View style={styles.signatureSpace} />
             
-            <Text style={styles.signatureName}>{PRINCIPAL.NAME}</Text>
-            <Text style={styles.signatureNip}>NIP. {PRINCIPAL.NIP}</Text>
+            <Text style={styles.signatureName}>{PRINCIPAL.name}</Text>
+            <Text style={styles.signatureNip}>NIP. {PRINCIPAL.nip}</Text>
           </View>
         </View>
       </Page>
