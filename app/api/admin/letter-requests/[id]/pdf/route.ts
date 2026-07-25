@@ -42,7 +42,7 @@ export async function GET(request: NextRequest, { params }: Params) {
 
   let logoSidoarjoBase64 = "";
   try {
-    const logoSidoarjoPath = path.join(process.cwd(), "public", "logo-sidoarjo.png");
+    const logoSidoarjoPath = path.join(process.cwd(), "public", "logo pemkab.png");
     if (fs.existsSync(logoSidoarjoPath)) {
       const logoBuffer = fs.readFileSync(logoSidoarjoPath);
       logoSidoarjoBase64 = `data:image/png;base64,${logoBuffer.toString("base64")}`;
