@@ -25,11 +25,8 @@ const styles = StyleSheet.create({
   // KOP SURAT
   headerContainer: {
     flexDirection: "row",
-    borderBottomWidth: 3,
-    borderBottomColor: "#000",
-    paddingBottom: 10,
-    marginBottom: 20,
     alignItems: "center",
+    paddingBottom: 5,
   },
   headerLogoContainer: {
     width: 60,
@@ -44,12 +41,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   headerGov: {
-    fontSize: 13,
+    fontSize: 12,
     fontFamily: "Times-Roman",
     textAlign: "center",
   },
   headerDept: {
-    fontSize: 13,
+    fontSize: 12,
     fontFamily: "Times-Roman",
     textAlign: "center",
   },
@@ -65,10 +62,19 @@ const styles = StyleSheet.create({
     fontFamily: "Times-Roman",
     textAlign: "center",
   },
-  headerContact: {
-    fontSize: 10,
-    fontFamily: "Times-Roman",
-    textAlign: "center",
+  
+  // DIVIDER (Double Line)
+  dividerContainer: {
+    marginBottom: 20,
+  },
+  dividerThick: {
+    borderBottomWidth: 3,
+    borderBottomColor: "#000",
+    marginBottom: 1,
+  },
+  dividerThin: {
+    borderBottomWidth: 1,
+    borderBottomColor: "#000",
   },
 
   // TITLE & NUMBER
@@ -182,6 +188,7 @@ type LetterData = {
   fatherName?: string | null;
   motherName?: string | null;
   logoSdn?: string;
+  logoLeft?: string;
 };
 
 // Formatter for Indonesian Dates
@@ -193,21 +200,26 @@ const formatDate = (date: Date) => {
   return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
 };
 
-const KopSurat = ({ logoSdn }: { logoSdn?: string }) => (
-  <View style={styles.headerContainer}>
-    <View style={styles.headerLogoContainer}>
-      {logoSdn && <Image src={logoSdn} style={styles.headerLogo} />}
+const KopSurat = ({ logoSdn, logoLeft }: { logoSdn?: string, logoLeft?: string }) => (
+  <View>
+    <View style={styles.headerContainer}>
+      <View style={styles.headerLogoContainer}>
+        {logoLeft ? <Image src={logoLeft} style={styles.headerLogo} /> : (logoSdn && <Image src={logoSdn} style={styles.headerLogo} />)}
+      </View>
+      <View style={styles.headerTextContainer}>
+        <Text style={styles.headerGov}>PEMERINTAH KABUPATEN SIDOARJO</Text>
+        <Text style={styles.headerDept}>DINAS PENDIDIKAN DAN KEBUDAYAAN</Text>
+        <Text style={styles.headerSchool}>{SCHOOL.name}</Text>
+        <Text style={styles.headerAddress}>Jalan Simoangin-angin, Wonoayu, Sidoarjo, Jawa Timur 61261</Text>
+        <Text style={styles.headerAddress}>Pos-el {SCHOOL.email}</Text>
+      </View>
+      <View style={styles.headerLogoContainer}>
+        {logoSdn && <Image src={logoSdn} style={styles.headerLogo} />}
+      </View>
     </View>
-    <View style={styles.headerTextContainer}>
-      <Text style={styles.headerGov}>PEMERINTAH KABUPATEN SIDOARJO</Text>
-      <Text style={styles.headerDept}>DINAS PENDIDIKAN DAN KEBUDAYAAN</Text>
-      <Text style={styles.headerSchool}>{SCHOOL.name}</Text>
-      <Text style={styles.headerAddress}>{SCHOOL.address}</Text>
-      <Text style={styles.headerContact}>Telp. {SCHOOL.phone}   Pos-el: {SCHOOL.email}   Web: {SCHOOL.website}</Text>
-      <Text style={styles.headerContact}>NPSN: {SCHOOL.npsn}</Text>
-    </View>
-    <View style={styles.headerLogoContainer}>
-      {logoSdn && <Image src={logoSdn} style={styles.headerLogo} />}
+    <View style={styles.dividerContainer}>
+      <View style={styles.dividerThick} />
+      <View style={styles.dividerThin} />
     </View>
   </View>
 );
@@ -237,7 +249,7 @@ export const LetterPdf = ({ data }: { data: LetterData }) => {
     return (
       <Document>
         <Page size="A4" style={styles.page}>
-          <KopSurat logoSdn={data.logoSdn} />
+          <KopSurat logoSdn={data.logoSdn} logoLeft={data.logoLeft} />
           
           <View style={styles.titleContainer}>
             <Text style={styles.title}>SURAT KETERANGAN</Text>
@@ -313,7 +325,7 @@ export const LetterPdf = ({ data }: { data: LetterData }) => {
     return (
       <Document>
         <Page size="A4" style={styles.page}>
-          <KopSurat logoSdn={data.logoSdn} />
+          <KopSurat logoSdn={data.logoSdn} logoLeft={data.logoLeft} />
           
           <View style={styles.titleContainer}>
             <Text style={styles.title}>SURAT KETERANGAN PINDAH SEKOLAH</Text>
@@ -384,7 +396,7 @@ export const LetterPdf = ({ data }: { data: LetterData }) => {
   return (
     <Document>
       <Page size="A4" style={styles.page}>
-        <KopSurat logoSdn={data.logoSdn} />
+        <KopSurat logoSdn={data.logoSdn} logoLeft={data.logoLeft} />
         
         <View style={styles.titleContainer}>
           <Text style={styles.title}>SURAT KETERANGAN PENERIMAAN SISWA PINDAHAN</Text>

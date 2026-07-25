@@ -40,6 +40,17 @@ export async function GET(request: NextRequest, { params }: Params) {
     console.error("Failed to read logo", e);
   }
 
+  let logoSidoarjoBase64 = "";
+  try {
+    const logoSidoarjoPath = path.join(process.cwd(), "public", "logo-sidoarjo.png");
+    if (fs.existsSync(logoSidoarjoPath)) {
+      const logoBuffer = fs.readFileSync(logoSidoarjoPath);
+      logoSidoarjoBase64 = `data:image/png;base64,${logoBuffer.toString("base64")}`;
+    }
+  } catch (e) {
+    console.error("Failed to read sidoarjo logo", e);
+  }
+
   const pdfData = {
     letterType: record.letterType,
     studentName: record.studentName,
@@ -59,6 +70,7 @@ export async function GET(request: NextRequest, { params }: Params) {
     fatherName: record.fatherName,
     motherName: record.motherName,
     logoSdn: logoSdnBase64,
+    logoLeft: logoSidoarjoBase64 || undefined,
   };
 
   const buffer = await renderToBuffer(
