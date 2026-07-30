@@ -38,7 +38,7 @@ export async function POST(_: Request, { params }: Params) {
   }
 
   try {
-    const success = await sendLetterStatusEmail(
+    const result = await sendLetterStatusEmail(
       record.applicantEmail,
       record.applicantName,
       record.ticketNumber,
@@ -47,9 +47,9 @@ export async function POST(_: Request, { params }: Params) {
       record.adminNotes ?? undefined
     );
 
-    if (!success) {
+    if (!result.success) {
       return NextResponse.json(
-        { error: "Gagal mengirim email. Periksa konfigurasi SMTP di server." },
+        { error: result.error || "Gagal mengirim email. Periksa konfigurasi SMTP di server." },
         { status: 500 }
       );
     }
