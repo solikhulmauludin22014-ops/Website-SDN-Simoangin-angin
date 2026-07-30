@@ -17,6 +17,7 @@ import {
   MapPin,
   Calendar,
   Hash,
+  SendHorizonal,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -59,6 +60,7 @@ export default function AdminDetailSuratPage() {
   const [data, setData] = useState<LetterDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [sendingEmail, setSendingEmail] = useState(false);
 
   // Update form state
   const [status, setStatus] = useState("");
@@ -114,6 +116,25 @@ export default function AdminDetailSuratPage() {
     const updated = await response.json();
     setData(updated);
     toast.success("Pengajuan berhasil diperbarui");
+  }
+
+  async function handleResendEmail() {
+    setSendingEmail(true);
+    try {
+      const res = await fetch(`/api/admin/letter-requests/${id}/resend-email`, {
+        method: "POST",
+      });
+      const result = await res.json();
+      if (!res.ok) {
+        toast.error(result.error ?? "Gagal mengirim email");
+      } else {
+        toast.success(`Email berhasil dikirim ke ${result.to}`);
+      }
+    } catch {
+      toast.error("Terjadi kesalahan jaringan");
+    } finally {
+      setSendingEmail(false);
+    }
   }
 
   async function handleDelete() {
@@ -392,6 +413,20 @@ export default function AdminDetailSuratPage() {
                   <Trash2 className="h-4 w-4" />
                 </Button>
               </div>
+
+              {/* Tombol kirim ulang email — muncul jika status SELESAI/DITOLAK dan ada email */}
+              {data.applicantEmail &&
+                (data.status === "COMPLETED" || data.status === "REJECTED") && (
+                  <Button
+                    variant="outline"
+                    className="w-full gap-2 border-blue-300 text-blue-700 hover:bg-blue-50 dark:border-blue-700 dark:text-blue-400 dark:hover:bg-blue-950/30"
+                    onClick={handleResendEmail}
+                    disabled={sendingEmail}
+                  >
+                    <SendHorizonal className="h-4 w-4" />
+                    {sendingEmail ? "Mengirim email..." : "Kirim Ulang Email ke Pemohon"}
+                  </Button>
+                )}
             </CardContent>
           </Card>
 

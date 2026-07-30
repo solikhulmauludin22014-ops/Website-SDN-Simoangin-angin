@@ -54,29 +54,35 @@ export async function PATCH(request: Request, { params }: Params) {
     updateData.adminNotes = null;
   }
 
+  // Ambil status lama SEBELUM diupdate agar bisa deteksi perubahan status
+  const oldRecord = await prisma.letterRequest.findUnique({
+    where: { id },
+    select: { status: true },
+  });
+  const oldStatus = oldRecord?.status ?? "";
+
   const record = await prisma.letterRequest.update({
     where: { id },
     data: updateData,
   });
 
-  // Check if status changed to COMPLETED or REJECTED and an email is provided
+  // Kirim email hanya jika status BERUBAH menjadi COMPLETED atau REJECTED
+  const newStatus = record.status;
+  const statusChanged = oldStatus !== newStatus;
   if (
     record.applicantEmail &&
-    (record.status === "COMPLETED" || record.status === "REJECTED")
+    statusChanged &&
+    (newStatus === "COMPLETED" || newStatus === "REJECTED")
   ) {
-    // Determine if we need to send an email (only if status is newly set in this request)
-    // parsed.data.status is the newly requested status
-    if (parsed.data.status === "COMPLETED" || parsed.data.status === "REJECTED") {
-      // Fire and forget so we don't block the API response
-      sendLetterStatusEmail(
-        record.applicantEmail,
-        record.applicantName,
-        record.ticketNumber,
-        record.letterType,   // ← jenis surat untuk label di email
-        record.status,
-        record.adminNotes
-      ).catch((err) => console.error("Error firing email:", err));
-    }
+    // Fire and forget — tidak memblokir response API
+    sendLetterStatusEmail(
+      record.applicantEmail,
+      record.applicantName,
+      record.ticketNumber,
+      record.letterType,
+      newStatus,
+      record.adminNotes ?? undefined
+    ).catch((err) => console.error("[MAIL] Error kirim email otomatis:", err));
   }
 
   return NextResponse.json(record);
