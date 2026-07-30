@@ -151,12 +151,37 @@ export async function sendLetterStatusEmail(
 </body>
 </html>`;
 
+    // Plain text version — penting agar tidak dianggap spam
+    const textContent = [
+      `Yth. ${applicantName},`,
+      ``,
+      `Pengajuan ${letterTypeLabel} Anda dengan nomor tiket ${ticketNumber} telah SELESAI dan SIAP DIAMBIL.`,
+      ``,
+      `Lokasi Pengambilan : Ruang Tata Usaha ${SCHOOL.name}`,
+      `Alamat             : ${SCHOOL.address}`,
+      `Jadwal Pelayanan   : Senin-Kamis 07.00-14.30 | Jumat 07.00-11.00 | Sabtu 07.00-12.30`,
+      ``,
+      adminNotes ? `Catatan Admin: ${adminNotes}` : ``,
+      ``,
+      `Cek status di: ${process.env.NEXTAUTH_URL ?? "https://website-sdn-simoangin-angin.vercel.app"}/layanan-surat/cek?ticket=${ticketNumber}`,
+      ``,
+      `Salam,`,
+      `${SCHOOL.name}`,
+    ].filter(Boolean).join("\n");
+
     try {
       const info = await transporter.sendMail({
         from: `"${SCHOOL.name}" <${process.env.SMTP_EMAIL}>`,
+        replyTo: `"${SCHOOL.name}" <${process.env.SMTP_EMAIL}>`,
         to: toEmail,
         subject,
+        text: textContent,
         html: htmlContent,
+        headers: {
+          "X-Priority": "1",
+          "X-Mailer": "SDN Simoangin-angin Mailer",
+          "Importance": "High",
+        },
       });
       console.log("[MAIL] Email SELESAI terkirim:", info.messageId);
       return true;
@@ -268,12 +293,35 @@ export async function sendLetterStatusEmail(
 </body>
 </html>`;
 
+  // Plain text version untuk REJECTED — penting agar tidak dianggap spam
+  const textContentRejected = [
+    `Yth. ${applicantName},`,
+    ``,
+    `Pengajuan ${letterTypeLabel} Anda dengan nomor tiket ${ticketNumber} BELUM DAPAT KAMI PROSES.`,
+    ``,
+    `Alasan: ${adminNotes ?? "Silakan hubungi pihak sekolah untuk informasi lebih lanjut."}`,
+    ``,
+    `Silakan ajukan ulang melalui: ${process.env.NEXTAUTH_URL ?? "https://website-sdn-simoangin-angin.vercel.app"}/layanan-surat`,
+    ``,
+    `Untuk informasi lebih lanjut hubungi: ${SCHOOL.phone}`,
+    ``,
+    `Salam,`,
+    `${SCHOOL.name}`,
+  ].join("\n");
+
   try {
     const info = await transporter.sendMail({
       from: `"${SCHOOL.name}" <${process.env.SMTP_EMAIL}>`,
+      replyTo: `"${SCHOOL.name}" <${process.env.SMTP_EMAIL}>`,
       to: toEmail,
       subject,
+      text: textContentRejected,
       html: htmlContent,
+      headers: {
+        "X-Priority": "1",
+        "X-Mailer": "SDN Simoangin-angin Mailer",
+        "Importance": "High",
+      },
     });
     console.log("[MAIL] Email DITOLAK terkirim:", info.messageId);
     return true;
