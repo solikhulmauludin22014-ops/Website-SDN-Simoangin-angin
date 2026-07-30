@@ -41,8 +41,7 @@
     "swr": "^2.4.2",
     "tailwind-merge": "^3.6.0",
     "zod": "^4.4.3",
-    "nodemailer": "^6.9.14",
-    "resend": "^4.7.0"
+    "nodemailer": "^6.9.14"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
