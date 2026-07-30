@@ -72,6 +72,7 @@ export async function PATCH(request: Request, { params }: Params) {
         record.applicantEmail,
         record.applicantName,
         record.ticketNumber,
+        record.letterType,   // ← jenis surat untuk label di email
         record.status,
         record.adminNotes
       ).catch((err) => console.error("Error firing email:", err));
