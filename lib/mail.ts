@@ -1,18 +1,12 @@
-import nodemailer from "nodemailer";
-import { SCHOOL, PRINCIPAL, LETTER_TYPE_LABELS } from "./school-config";
-
-// Konfigurasi transporter nodemailer menggunakan Gmail
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.SMTP_EMAIL,   // Email pengirim (Gmail)
-    pass: process.env.SMTP_PASSWORD, // App Password Gmail (16 digit)
-  },
-});
+import { Resend } from "resend";
+import { SCHOOL, LETTER_TYPE_LABELS } from "./school-config";
 
 /**
- * Kirim email notifikasi status surat ke pemohon.
- * Template mengikuti format resmi sekolah (Pak Ikul).
+ * Kirim email notifikasi status surat ke pemohon menggunakan Resend API.
+ * Resend adalah layanan email yang dirancang khusus untuk Next.js/Vercel,
+ * menggunakan HTTPS (bukan SMTP) sehingga 100% reliable di serverless.
+ *
+ * Dokumentasi: https://resend.com/docs
  *
  * @param toEmail       - Alamat email tujuan
  * @param applicantName - Nama lengkap pemohon
@@ -29,24 +23,31 @@ export async function sendLetterStatusEmail(
   status: string,
   adminNotes?: string | null
 ) {
-  if (!process.env.SMTP_EMAIL || !process.env.SMTP_PASSWORD) {
-    console.warn("Email tidak dikirim: Konfigurasi SMTP belum diatur di .env");
+  if (!process.env.RESEND_API_KEY) {
+    console.warn("[MAIL] Email tidak dikirim: RESEND_API_KEY belum diatur di .env");
     return false;
   }
 
+  const resend = new Resend(process.env.RESEND_API_KEY);
   const isCompleted = status === "COMPLETED";
-
-  // Label jenis surat dalam Bahasa Indonesia
   const letterTypeLabel = LETTER_TYPE_LABELS[letterType] ?? letterType;
+
+  // Alamat pengirim — gunakan domain yang sudah diverifikasi di Resend Dashboard.
+  // Jika belum punya domain sendiri, daftarkan domain sekolah di resend.com/domains
+  // atau sementara pakai: onboarding@resend.dev (khusus testing/free tier)
+  const fromAddress = process.env.RESEND_FROM_EMAIL ?? "onboarding@resend.dev";
+  const fromName = `${SCHOOL.name} <${fromAddress}>`;
+
+  const baseUrl =
+    process.env.NEXTAUTH_URL ?? "https://website-sdn-simoangin-angin.vercel.app";
 
   // ────────────────────────────────────────────────────────────
   // TEMPLATE 1 — Status SELESAI / SIAP DIAMBIL
   // ────────────────────────────────────────────────────────────
   if (isCompleted) {
-    const subject = `Pengajuan Surat Selesai - ${SCHOOL.name}`;
+    const subject = `✅ Pengajuan Surat Selesai - ${SCHOOL.name}`;
 
-    const htmlContent = `
-<!DOCTYPE html>
+    const html = `<!DOCTYPE html>
 <html lang="id">
 <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
 <body style="margin:0; padding:0; background-color:#f4f6f8; font-family: Arial, sans-serif;">
@@ -119,13 +120,13 @@ export async function sendLetterStatusEmail(
       ` : ""}
 
       <p style="margin:0 0 20px; color:#374151; font-size:14px; line-height:1.6;">
-        Jika Anda memiliki pertanyaan lebih lanjut, silakan balas email ini atau hubungi kami melalui
+        Jika Anda memiliki pertanyaan lebih lanjut, silakan hubungi kami melalui
         <strong>${SCHOOL.phone}</strong>.
       </p>
 
       <!-- CTA Button -->
       <div style="text-align:center; margin:8px 0 28px;">
-        <a href="${process.env.NEXTAUTH_URL ?? "https://website-sdn-simoangin-angin.vercel.app"}/layanan-surat/cek?ticket=${ticketNumber}"
+        <a href="${baseUrl}/layanan-surat/cek?ticket=${ticketNumber}"
            style="display:inline-block; background:#2563eb; color:#ffffff; padding:13px 28px; border-radius:8px; font-weight:700; font-size:14px; text-decoration:none;">
           Cek Status di Website
         </a>
@@ -143,7 +144,7 @@ export async function sendLetterStatusEmail(
     <!-- Footer -->
     <div style="background:#f9fafb; border-top:1px solid #e5e7eb; padding:16px 32px; text-align:center;">
       <p style="margin:0; color:#9ca3af; font-size:12px; line-height:1.6;">
-        Ini adalah pesan otomatis, namun Anda tetap dapat membalas email ini jika ada kendala.<br>
+        Ini adalah pesan otomatis dari sistem layanan surat ${SCHOOL.name}.<br>
         ${SCHOOL.name} • ${SCHOOL.address}
       </p>
     </div>
@@ -151,8 +152,7 @@ export async function sendLetterStatusEmail(
 </body>
 </html>`;
 
-    // Plain text version — penting agar tidak dianggap spam
-    const textContent = [
+    const text = [
       `Yth. ${applicantName},`,
       ``,
       `Pengajuan ${letterTypeLabel} Anda dengan nomor tiket ${ticketNumber} telah SELESAI dan SIAP DIAMBIL.`,
@@ -163,30 +163,32 @@ export async function sendLetterStatusEmail(
       ``,
       adminNotes ? `Catatan Admin: ${adminNotes}` : ``,
       ``,
-      `Cek status di: ${process.env.NEXTAUTH_URL ?? "https://website-sdn-simoangin-angin.vercel.app"}/layanan-surat/cek?ticket=${ticketNumber}`,
+      `Cek status di: ${baseUrl}/layanan-surat/cek?ticket=${ticketNumber}`,
       ``,
       `Salam,`,
       `${SCHOOL.name}`,
-    ].filter(Boolean).join("\n");
+    ]
+      .filter((line) => line !== undefined)
+      .join("\n");
 
     try {
-      const info = await transporter.sendMail({
-        from: `"${SCHOOL.name}" <${process.env.SMTP_EMAIL}>`,
-        replyTo: `"${SCHOOL.name}" <${process.env.SMTP_EMAIL}>`,
+      const { data, error } = await resend.emails.send({
+        from: fromName,
         to: toEmail,
         subject,
-        text: textContent,
-        html: htmlContent,
-        headers: {
-          "X-Priority": "1",
-          "X-Mailer": "SDN Simoangin-angin Mailer",
-          "Importance": "High",
-        },
+        html,
+        text,
       });
-      console.log("[MAIL] Email SELESAI terkirim:", info.messageId);
+
+      if (error) {
+        console.error("[MAIL] Resend error (SELESAI):", error);
+        return false;
+      }
+
+      console.log("[MAIL] Email SELESAI terkirim via Resend. ID:", data?.id);
       return true;
-    } catch (error) {
-      console.error("[MAIL] Gagal mengirim email SELESAI:", error);
+    } catch (err) {
+      console.error("[MAIL] Gagal mengirim email SELESAI:", err);
       return false;
     }
   }
@@ -194,10 +196,9 @@ export async function sendLetterStatusEmail(
   // ────────────────────────────────────────────────────────────
   // TEMPLATE 2 — Status DITOLAK
   // ────────────────────────────────────────────────────────────
-  const subject = `[PENTING] Status Pengajuan Surat Ditolak - ${SCHOOL.name}`;
+  const subject = `❌ Status Pengajuan Surat Ditolak - ${SCHOOL.name}`;
 
-  const htmlContent = `
-<!DOCTYPE html>
+  const html = `<!DOCTYPE html>
 <html lang="id">
 <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
 <body style="margin:0; padding:0; background-color:#f4f6f8; font-family: Arial, sans-serif;">
@@ -262,7 +263,7 @@ export async function sendLetterStatusEmail(
 
       <!-- CTA Button -->
       <div style="text-align:center; margin:0 0 28px;">
-        <a href="${process.env.NEXTAUTH_URL ?? "https://website-sdn-simoangin-angin.vercel.app"}/layanan-surat"
+        <a href="${baseUrl}/layanan-surat"
            style="display:inline-block; background:#2563eb; color:#ffffff; padding:13px 28px; border-radius:8px; font-weight:700; font-size:14px; text-decoration:none;">
           👉 Formulir Pengajuan Surat
         </a>
@@ -285,7 +286,7 @@ export async function sendLetterStatusEmail(
     <!-- Footer -->
     <div style="background:#f9fafb; border-top:1px solid #e5e7eb; padding:16px 32px; text-align:center;">
       <p style="margin:0; color:#9ca3af; font-size:12px; line-height:1.6;">
-        Ini adalah pesan otomatis, namun Anda tetap dapat membalas email ini jika ada kendala.<br>
+        Ini adalah pesan otomatis dari sistem layanan surat ${SCHOOL.name}.<br>
         ${SCHOOL.name} • ${SCHOOL.address}
       </p>
     </div>
@@ -293,15 +294,14 @@ export async function sendLetterStatusEmail(
 </body>
 </html>`;
 
-  // Plain text version untuk REJECTED — penting agar tidak dianggap spam
-  const textContentRejected = [
+  const text = [
     `Yth. ${applicantName},`,
     ``,
     `Pengajuan ${letterTypeLabel} Anda dengan nomor tiket ${ticketNumber} BELUM DAPAT KAMI PROSES.`,
     ``,
     `Alasan: ${adminNotes ?? "Silakan hubungi pihak sekolah untuk informasi lebih lanjut."}`,
     ``,
-    `Silakan ajukan ulang melalui: ${process.env.NEXTAUTH_URL ?? "https://website-sdn-simoangin-angin.vercel.app"}/layanan-surat`,
+    `Silakan ajukan ulang melalui: ${baseUrl}/layanan-surat`,
     ``,
     `Untuk informasi lebih lanjut hubungi: ${SCHOOL.phone}`,
     ``,
@@ -310,23 +310,23 @@ export async function sendLetterStatusEmail(
   ].join("\n");
 
   try {
-    const info = await transporter.sendMail({
-      from: `"${SCHOOL.name}" <${process.env.SMTP_EMAIL}>`,
-      replyTo: `"${SCHOOL.name}" <${process.env.SMTP_EMAIL}>`,
+    const { data, error } = await resend.emails.send({
+      from: fromName,
       to: toEmail,
       subject,
-      text: textContentRejected,
-      html: htmlContent,
-      headers: {
-        "X-Priority": "1",
-        "X-Mailer": "SDN Simoangin-angin Mailer",
-        "Importance": "High",
-      },
+      html,
+      text,
     });
-    console.log("[MAIL] Email DITOLAK terkirim:", info.messageId);
+
+    if (error) {
+      console.error("[MAIL] Resend error (DITOLAK):", error);
+      return false;
+    }
+
+    console.log("[MAIL] Email DITOLAK terkirim via Resend. ID:", data?.id);
     return true;
-  } catch (error) {
-    console.error("[MAIL] Gagal mengirim email DITOLAK:", error);
+  } catch (err) {
+    console.error("[MAIL] Gagal mengirim email DITOLAK:", err);
     return false;
   }
 }
