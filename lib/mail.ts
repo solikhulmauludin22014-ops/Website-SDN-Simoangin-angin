@@ -124,15 +124,10 @@ export async function sendLetterStatusEmail(
     try {
       const info = await transporter.sendMail({
         from: `"${SCHOOL.name}" <${process.env.SMTP_EMAIL}>`,
-        replyTo: `"${SCHOOL.name}" <${process.env.SMTP_EMAIL}>`,
         to: toEmail,
         subject,
         text: textContent,
         html: htmlContent,
-        headers: {
-          "X-Mailer": "SDN Simoangin-angin Notification System",
-          "List-Unsubscribe": `<mailto:${process.env.SMTP_EMAIL}?subject=unsubscribe>`,
-        },
       });
       console.log("[MAIL] Email SELESAI terkirim:", info.messageId);
       return { success: true };
@@ -225,15 +220,10 @@ export async function sendLetterStatusEmail(
   try {
     const info = await transporter.sendMail({
       from: `"${SCHOOL.name}" <${process.env.SMTP_EMAIL}>`,
-      replyTo: `"${SCHOOL.name}" <${process.env.SMTP_EMAIL}>`,
       to: toEmail,
       subject,
       text: textContentRejected,
       html: htmlContent,
-      headers: {
-        "X-Mailer": "SDN Simoangin-angin Notification System",
-        "List-Unsubscribe": `<mailto:${process.env.SMTP_EMAIL}?subject=unsubscribe>`,
-      },
     });
     console.log("[MAIL] Email DITOLAK terkirim:", info.messageId);
     return { success: true };
