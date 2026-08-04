@@ -5,7 +5,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Quote, Star, BookOpen, Users, Award, GraduationCap, Trophy, ArrowRight, Newspaper, Calendar, MessageSquare, Headphones, HelpCircle, ClipboardCheck } from "lucide-react";
+import { Quote, Star, BookOpen, Users, Award, GraduationCap, Trophy, ArrowRight, Newspaper, Calendar, MessageSquare, Headphones, HelpCircle, ClipboardCheck, FileText } from "lucide-react";
 import { TeacherSlider } from "@/components/teachers/teacher-slider";
 import { useState, useEffect } from "react";
 
@@ -146,6 +146,12 @@ export default function Home() {
               <Link href="/perpustakaan">
                 <BookOpen className="h-4 w-4" />
                 Masuk Perpustakaan Digital
+              </Link>
+            </Button>
+            <Button asChild size="lg" variant="outline" className="gap-2 border-white/40 text-white backdrop-blur-sm hover:bg-white/10 hover:border-white">
+              <Link href="/layanan-surat">
+                <FileText className="h-4 w-4" />
+                Layanan Surat
               </Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="gap-2 border-white/40 text-white backdrop-blur-sm hover:bg-white/10 hover:border-white">
@@ -558,6 +564,12 @@ export default function Home() {
               className="btn-pulse-gold inline-flex items-center gap-2 rounded-full bg-[var(--color-secondary)] px-6 py-3 text-sm font-semibold text-white shadow-lg transition-all duration-200 hover:scale-105 hover:brightness-110"
             >
               Hubungi Kami <ArrowRight className="h-4 w-4" />
+            </Link>
+            <Link
+              href="/layanan-surat"
+              className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-6 py-3 text-sm font-semibold text-white backdrop-blur-sm transition-all duration-200 hover:scale-105 hover:bg-white/20"
+            >
+              <FileText className="h-4 w-4" /> Layanan Surat
             </Link>
             <Link
               href="/perpustakaan"
