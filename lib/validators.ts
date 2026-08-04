@@ -27,7 +27,7 @@ export type BookInput = z.infer<typeof bookSchema>;
 /* ── Layanan Surat ──────────────────────────────────────────── */
 
 export const letterRequestSchema = z.object({
-  letterType: z.enum(["ACTIVE_STUDENT", "TRANSFER", "OTHER"]),
+  letterType: z.enum(["ACTIVE_STUDENT", "TRANSFER", "ACCEPTANCE", "OTHER", "PIP"]),
   applicantName: z.string().min(2, "Nama pemohon wajib diisi").max(200),
   applicantPhone: z.string().min(8, "No HP minimal 8 digit").max(20),
   applicantEmail: z.string().email("Format email tidak valid").optional().or(z.literal("")),
@@ -46,6 +46,25 @@ export const letterRequestSchema = z.object({
   address: z.string().min(5, "Alamat wajib diisi").max(1000),
   purpose: z.string().min(5, "Keperluan wajib diisi").max(2000),
   notes: z.string().max(2000).optional().or(z.literal("")),
+  virtualAccount: z.string().optional().or(z.literal("")),
+  accountNumber: z.string().optional().or(z.literal("")),
+}).superRefine((data, ctx) => {
+  if (data.letterType === "PIP") {
+    if (!data.virtualAccount || data.virtualAccount.trim() === "") {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["virtualAccount"],
+        message: "No VA wajib diisi untuk Surat Keterangan PIP",
+      });
+    }
+    if (!data.accountNumber || data.accountNumber.trim() === "") {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["accountNumber"],
+        message: "Rekening wajib diisi untuk Surat Keterangan PIP",
+      });
+    }
+  }
 });
 
 export const letterUpdateSchema = z.object({

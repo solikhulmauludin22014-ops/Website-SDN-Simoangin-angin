@@ -305,6 +305,47 @@ export default function LayananSuratPage() {
               </fieldset>
             )}
 
+            {/* Conditional Fields: PIP */}
+            {selectedType === "PIP" && (
+              <fieldset className="space-y-4 rounded-xl border border-amber-200 bg-amber-50/30 p-4 dark:border-amber-900 dark:bg-amber-900/10">
+                <legend className="px-2 text-sm font-semibold text-amber-700 dark:text-amber-400">Data Penerima PIP</legend>
+                <div className="grid gap-4 md:grid-cols-2">
+                  <div className="space-y-2">
+                    <Label htmlFor="gender">Jenis Kelamin *</Label>
+                    <select
+                      id="gender"
+                      name="gender"
+                      required
+                      defaultValue=""
+                      className="flex h-10 w-full rounded-md border border-[var(--color-border)] bg-white px-3 py-2 text-sm dark:bg-[var(--color-surface)]"
+                    >
+                      <option value="" disabled>Pilih</option>
+                      <option value="LAKI-LAKI">LAKI-LAKI</option>
+                      <option value="PEREMPUAN">PEREMPUAN</option>
+                    </select>
+                    {state?.fieldErrors?.gender && (
+                      <p className="text-xs text-red-500">{state.fieldErrors.gender[0]}</p>
+                    )}
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="virtualAccount">No VA (Virtual Account) *</Label>
+                    <Input id="virtualAccount" name="virtualAccount" required placeholder="Contoh: NF1056..." />
+                    {state?.fieldErrors?.virtualAccount && (
+                      <p className="text-xs text-red-500">{state.fieldErrors.virtualAccount[0]}</p>
+                    )}
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="accountNumber">No Rekening *</Label>
+                  <Input id="accountNumber" name="accountNumber" required placeholder="Contoh: 055301..." />
+                  {state?.fieldErrors?.accountNumber && (
+                    <p className="text-xs text-red-500">{state.fieldErrors.accountNumber[0]}</p>
+                  )}
+                </div>
+              </fieldset>
+            )}
+
+
             {/* Keperluan */}
             <div className="space-y-2">
               <Label htmlFor="purpose">Keperluan Surat *</Label>

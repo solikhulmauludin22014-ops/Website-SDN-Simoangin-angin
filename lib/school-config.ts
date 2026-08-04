@@ -26,6 +26,7 @@ export const LETTER_TYPE_LABELS: Record<string, string> = {
   TRANSFER: "Surat Keterangan Pindah Sekolah",
   ACCEPTANCE: "Surat Penerimaan Siswa Pindahan",
   OTHER: "Surat Keterangan Lainnya",
+  PIP: "Surat Keterangan PIP",
 };
 
 /** Label status pengajuan */

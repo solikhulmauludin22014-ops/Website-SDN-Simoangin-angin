@@ -69,6 +69,8 @@ export async function GET(request: NextRequest, { params }: Params) {
     previousSchool: record.previousSchool,
     fatherName: record.fatherName,
     motherName: record.motherName,
+    virtualAccount: record.virtualAccount,
+    accountNumber: record.accountNumber,
     logoSdn: logoSdnBase64,
     logoLeft: logoSidoarjoBase64 || undefined,
   };

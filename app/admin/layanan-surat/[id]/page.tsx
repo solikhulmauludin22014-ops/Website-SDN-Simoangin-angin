@@ -46,6 +46,8 @@ type LetterDetail = {
   address: string;
   purpose: string;
   notes: string | null;
+  virtualAccount: string | null;
+  accountNumber: string | null;
   status: string;
   officialNumber: string | null;
   officialDate: string | null;
@@ -314,6 +316,18 @@ export default function AdminDetailSuratPage() {
                 <MapPin className="mt-0.5 h-4 w-4 text-text-muted" />
                 <span>{data.address}</span>
               </div>
+              {data.virtualAccount && (
+                <div className="flex items-center gap-2">
+                  <Hash className="h-4 w-4 text-text-muted" />
+                  <span>No VA: {data.virtualAccount}</span>
+                </div>
+              )}
+              {data.accountNumber && (
+                <div className="flex items-center gap-2">
+                  <FileText className="h-4 w-4 text-text-muted" />
+                  <span>Rekening: {data.accountNumber}</span>
+                </div>
+              )}
             </div>
 
             {/* Keperluan */}

@@ -52,6 +52,7 @@ enum LetterType {
   TRANSFER
   ACCEPTANCE
   OTHER
+  PIP
 }
 
 enum RequestStatus {
@@ -80,6 +81,8 @@ model LetterRequest {
   previousSchool String?
   fatherName     String?
   motherName     String?
+  virtualAccount String?
+  accountNumber  String?
 
   parentName     String
   address        String        @db.Text

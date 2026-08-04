@@ -43,6 +43,8 @@ export async function submitLetterRequest(
     address: String(formData.get("address") ?? "").trim(),
     purpose: String(formData.get("purpose") ?? "").trim(),
     notes: String(formData.get("notes") ?? "").trim() || undefined,
+    virtualAccount: String(formData.get("virtualAccount") ?? "").trim() || undefined,
+    accountNumber: String(formData.get("accountNumber") ?? "").trim() || undefined,
   };
 
   const parsed = letterRequestSchema.safeParse(rawData);
@@ -79,6 +81,8 @@ export async function submitLetterRequest(
         address: parsed.data.address,
         purpose: parsed.data.purpose,
         notes: parsed.data.notes || null,
+        virtualAccount: parsed.data.virtualAccount || null,
+        accountNumber: parsed.data.accountNumber || null,
       },
     });
 

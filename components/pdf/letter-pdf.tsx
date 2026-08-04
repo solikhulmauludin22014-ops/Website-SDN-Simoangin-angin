@@ -189,6 +189,8 @@ type LetterData = {
   previousSchool?: string | null;
   fatherName?: string | null;
   motherName?: string | null;
+  virtualAccount?: string | null;
+  accountNumber?: string | null;
   logoSdn?: string;
   logoLeft?: string;
 };
@@ -393,7 +395,96 @@ export const LetterPdf = ({ data }: { data: LetterData }) => {
   }
 
   // -------------------------------------------------------------
-  // TEMPLATE 3: SURAT PENERIMAAN SISWA PINDAHAN (ACCEPTANCE)
+  // TEMPLATE 3: SURAT KETERANGAN PIP (PIP)
+  // -------------------------------------------------------------
+  if (data.letterType === "PIP") {
+    return (
+      <Document>
+        <Page size="A4" style={styles.page}>
+          <KopSurat logoSdn={data.logoSdn} logoLeft={data.logoLeft} />
+          
+          <View style={styles.titleContainer}>
+            <Text style={styles.title}>SURAT KETERANGAN</Text>
+            <Text style={styles.titleNumber}>Nomor : {data.officialNumber}</Text>
+          </View>
+          
+          <Text style={styles.text}>Yang bertanda tangan dibawah ini :</Text>
+          
+          <View style={{ marginTop: 5, paddingLeft: 0 }}>
+            <View style={styles.row}>
+              <Text style={styles.colLabel}>Nama</Text><Text style={styles.colColon}>:</Text>
+              <Text style={styles.colValue}>{PRINCIPAL.name}</Text>
+            </View>
+            <View style={styles.row}>
+              <Text style={styles.colLabel}>NIP</Text><Text style={styles.colColon}>:</Text>
+              <Text style={styles.colValue}>{PRINCIPAL.nip}</Text>
+            </View>
+            <View style={styles.row}>
+              <Text style={styles.colLabel}>Pangkat/Gol</Text><Text style={styles.colColon}>:</Text>
+              <Text style={styles.colValue}>Penata / III c</Text>
+            </View>
+            <View style={styles.row}>
+              <Text style={styles.colLabel}>Jabatan</Text><Text style={styles.colColon}>:</Text>
+              <Text style={styles.colValue}>Plt Kepala Sekolah SD Negeri Simoangin-angin</Text>
+            </View>
+          </View>
+          
+          <Text style={[styles.text, { marginTop: 15 }]}>Menerangkan Bahwa :</Text>
+          
+          <View style={{ marginTop: 5, paddingLeft: 0 }}>
+            <View style={styles.row}>
+              <Text style={styles.colLabel}>Nama</Text><Text style={styles.colColon}>:</Text>
+              <Text style={styles.colValue}>{data.studentName}</Text>
+            </View>
+            <View style={styles.row}>
+              <Text style={styles.colLabel}>Tempat lahir</Text><Text style={styles.colColon}>:</Text>
+              <Text style={styles.colValue}>{data.birthPlace}</Text>
+            </View>
+            <View style={styles.row}>
+              <Text style={styles.colLabel}>Tanggal lahir</Text><Text style={styles.colColon}>:</Text>
+              <Text style={styles.colValue}>{formattedBirthDate}</Text>
+            </View>
+            <View style={styles.row}>
+              <Text style={styles.colLabel}>Jenis kelamin</Text><Text style={styles.colColon}>:</Text>
+              <Text style={styles.colValue}>{data.gender || "-"}</Text>
+            </View>
+            <View style={styles.row}>
+              <Text style={styles.colLabel}>NISN</Text><Text style={styles.colColon}>:</Text>
+              <Text style={styles.colValue}>{data.nisn}</Text>
+            </View>
+            <View style={styles.row}>
+              <Text style={styles.colLabel}>No. VA</Text><Text style={styles.colColon}>:</Text>
+              <Text style={styles.colValue}>{data.virtualAccount || "-"}</Text>
+            </View>
+            <View style={styles.row}>
+              <Text style={styles.colLabel}>Rekening</Text><Text style={styles.colColon}>:</Text>
+              <Text style={styles.colValue}>{data.accountNumber || "-"}</Text>
+            </View>
+            <View style={styles.row}>
+              <Text style={styles.colLabel}>Kelas</Text><Text style={styles.colColon}>:</Text>
+              <Text style={styles.colValue}>{data.studentClass}</Text>
+            </View>
+            <View style={styles.row}>
+              <Text style={styles.colLabel}>Alamat rumah</Text><Text style={styles.colColon}>:</Text>
+              <Text style={styles.colValue}>{data.address}</Text>
+            </View>
+          </View>
+          
+          <Text style={[styles.text, { marginTop: 15, textIndent: 20 }]}>
+            Nama tersebut diatas adalah Peserta Didik Aktif dan terdaftar sebagai penerima Dana PIP di SD Negeri Simoangin-angin Kecamatan Wonoayu Kabupaten Sidoarjo Tahun Ajaran 2025-2026.
+          </Text>
+          <Text style={[styles.text, { textIndent: 20 }]}>
+            Demikian Surat Keterangan ini dibuat dengan sebenarnya agar dapat dipergunakan sebagaimana perlunya.
+          </Text>
+          
+          <Signature officialDate={data.officialDate} isHeadmaster={true} />
+        </Page>
+      </Document>
+    );
+  }
+
+  // -------------------------------------------------------------
+  // TEMPLATE 4: SURAT PENERIMAAN SISWA PINDAHAN (ACCEPTANCE / OTHER)
   // -------------------------------------------------------------
   return (
     <Document>
